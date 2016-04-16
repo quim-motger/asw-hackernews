@@ -1,0 +1,27 @@
+<tr class="athing">
+  <td align="right" valign="top" class="title">
+    <span class="rank"><%= @counter %>.</span>
+  </td>
+  <td valign="top" class="votelinks">
+    <center>
+      <!--TODO: replace # for vote url-->
+      <a id="up_11510199" href="#">
+        <div class="votearrow" title="upvote"></div>
+      </a>
+    </center>
+  </td>
+  <td class="title">
+    <span class="deadmark">
+
+    </span>
+    <%= @contribution.content %>
+    <span class="sitebit comhead"> (<a href="#"><span class="sitestr"></span></a>)</span>
+  </td>
+</tr>
+<tr>
+  <td colspan="2"></td>
+  <td class="subtext">
+    <span class="score" id="score_11510199"><%= @contribution.upvote %> points</span> by <%= @contribution.user.name %>
+    <span class="age"><a href="#"><%= time_ago_in_words(@contribution.created_at) %></a></span> |
+    <a href="#"><%= @contribution.replies.length %> comments</a> |
+</tr>
