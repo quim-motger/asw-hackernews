@@ -7,6 +7,18 @@ class ContributionsController < ApplicationController
     @contributions = Contribution.all
   end
 
+  # GET /reply?id=2
+  def reply
+    set_contribution
+    if @contribution.contr_type != 'comment'
+      raise ActiveRecord::RecordNotFound, 'Trying to reply a contribution of type '+@contribution.contr_type
+    end
+    @reply = Contribution.new
+    @reply.parent_id = @contribution.id
+    @reply.contr_type = 'reply'
+    @reply.user = @contribution.user
+  end
+
   # GET /contributions/1
   # GET /contributions/1.json
   def show
@@ -28,8 +40,12 @@ class ContributionsController < ApplicationController
 
     respond_to do |format|
       if @contribution.save
-        format.html { redirect_to @contribution, notice: 'Contribution was successfully created.' }
-        format.json { render :show, status: :created, location: @contribution }
+        if @contribution.contr_type == 'reply'
+          format.html { redirect_to @contribution.parent }
+        else
+          format.html { redirect_to @contribution, notice: 'Contribution was successfully created.' }
+          format.json { render :show, status: :created, location: @contribution }
+        end
       else
         format.html { render :new }
         format.json { render json: @contribution.errors, status: :unprocessable_entity }
@@ -62,13 +78,13 @@ class ContributionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_contribution
-      @contribution = Contribution.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_contribution
+    @contribution = Contribution.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def contribution_params
-      params.require(:contribution).permit(:contr_type, :contr_subtype, :content, :url, :upvote, :user_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def contribution_params
+    params.require(:contribution).permit(:contr_type, :contr_subtype, :content, :user_id, :url, :upvote, :parent_id)
+  end
 end

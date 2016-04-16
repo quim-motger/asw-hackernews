@@ -1,14 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>HelloApp</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <title><%= yield(:title) %></title>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+<table id="hnmain">
 
-<%= yield %>
+  <tr>
+    <td bgcolor="#ff6600">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding:2px">
+        <tbody>
+        <tr>
+          <td style="width:18px;padding-right:4px">
+            <img src="<%= image_url('y18.gif') %>" width="18" height="18" style="border:1px white solid;">
+          </td>
+          <td style="line-height:12pt; height:10px;">
+            <span class="pagetop">
+              <b class="brandname">
+                <%= yield(:title) %>
+              </b>
+            </span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  <tr style="height:10px"></tr>
+  <tr>
+    <td>
+      <%= yield %>
+    </td>
+  </tr>
 
+</table>
 </body>
 </html>

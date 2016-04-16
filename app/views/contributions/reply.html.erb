@@ -1,0 +1,24 @@
+<% content_for :title, "Add comment" %>
+<table>
+  <%= render 'contribution_detail' %>
+
+
+
+
+  <tr>
+    <td colspan="2"></td>
+    <td>
+      <%= form_for(@reply) do |f| %>
+
+          <%= f.hidden_field :parent_id, value: @reply.parent_id %>
+          <%= f.hidden_field :user_id, value: @reply.user_id %>
+          <%= f.hidden_field :contr_type, value: @reply.contr_type %>
+          <%= f.text_area :content, cols: 60, rows: 6 %>
+          <div class="actions">
+            <%= f.submit 'Reply' %>
+          </div>
+      <% end %>
+    </td>
+  </tr>
+</table>
+

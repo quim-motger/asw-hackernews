@@ -4,9 +4,10 @@ class CreateContributions < ActiveRecord::Migration
       t.string :contr_type
       t.string :contr_subtype
       t.text :content
+      t.references :user, index: true, foreign_key: true
       t.string :url
       t.integer :upvote
-      t.integer :user_id
+      t.references :parent, index: true
 
       t.timestamps null: false
     end

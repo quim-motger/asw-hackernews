@@ -16,6 +16,11 @@
 </p>
 
 <p>
+  <strong>User:</strong>
+  <%= @contribution.user %>
+</p>
+
+<p>
   <strong>Url:</strong>
   <%= @contribution.url %>
 </p>
@@ -26,8 +31,8 @@
 </p>
 
 <p>
-  <strong>User:</strong>
-  <%= @contribution.user_id %>
+  <strong>Parent:</strong>
+  <%= @contribution.parent %>
 </p>
 
 <%= link_to 'Edit', edit_contribution_path(@contribution) %> |
