@@ -4,14 +4,16 @@ one:
   contr_type: MyString
   contr_subtype: MyString
   content: MyText
+  user_id: 
   url: MyString
   upvote: 1
-  user_id: 1
+  parent_id: 1
 
 two:
   contr_type: MyString
   contr_subtype: MyString
   content: MyText
+  user_id: 
   url: MyString
   upvote: 1
-  user_id: 1
+  parent_id: 1

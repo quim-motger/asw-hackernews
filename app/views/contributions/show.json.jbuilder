@@ -1,1 +1,1 @@
-json.extract! @contribution, :id, :contr_type, :contr_subtype, :content, :url, :upvote, :user_id, :created_at, :updated_at
+json.extract! @contribution, :id, :contr_type, :contr_subtype, :content, :user_id, :url, :upvote, :parent_id, :created_at, :updated_at
