@@ -18,7 +18,7 @@ class ContributionsControllerTest < ActionController::TestCase
 
   test "should create contribution" do
     assert_difference('Contribution.count') do
-      post :create, contribution: { content: @contribution.content, contr_subtype: @contribution.contr_subtype, contr_type: @contribution.contr_type, upvote: @contribution.upvote, url: @contribution.url, user_id: @contribution.user_id }
+      post :create, contribution: { content: @contribution.content, contr_subtype: @contribution.contr_subtype, contr_type: @contribution.contr_type, parent_id: @contribution.parent_id, upvote: @contribution.upvote, url: @contribution.url, user_id: @contribution.user_id }
     end
 
     assert_redirected_to contribution_path(assigns(:contribution))
@@ -35,7 +35,7 @@ class ContributionsControllerTest < ActionController::TestCase
   end
 
   test "should update contribution" do
-    patch :update, id: @contribution, contribution: { content: @contribution.content, contr_subtype: @contribution.contr_subtype, contr_type: @contribution.contr_type, upvote: @contribution.upvote, url: @contribution.url, user_id: @contribution.user_id }
+    patch :update, id: @contribution, contribution: { content: @contribution.content, contr_subtype: @contribution.contr_subtype, contr_type: @contribution.contr_type, parent_id: @contribution.parent_id, upvote: @contribution.upvote, url: @contribution.url, user_id: @contribution.user_id }
     assert_redirected_to contribution_path(assigns(:contribution))
   end
 
