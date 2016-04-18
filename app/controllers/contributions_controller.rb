@@ -21,7 +21,7 @@ class ContributionsController < ApplicationController
   
   def discuss
     set_contribution
-    if @contribution.contr_type != 'submission'
+    if @contribution.contr_type != 'post'
       raise ActiveRecord::RecordNotFound, 'Trying to discuss a contribution of type '+@contribution.contr_type
     end
     @discuss = Contribution.new
