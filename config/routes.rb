@@ -59,6 +59,6 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
   
-  root 'application#hello'
+  root 'contributions#index'
   
 end

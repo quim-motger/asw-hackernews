@@ -5,7 +5,7 @@
   <td valign="top" class="votelinks">
     <center>
       <!--TODO: replace # for vote url-->
-      <a id="up_11510199" href="#">
+      <a id="up_11510199" href="@contribution.vote.url">
         <div class="votearrow" title="upvote"></div>
       </a>
     </center>
@@ -14,14 +14,14 @@
     <span class="deadmark">
 
     </span>
-    <%= @contribution.content %>
+    <%= @contributions.content %>
     <span class="sitebit comhead"> (<a href="#"><span class="sitestr"></span></a>)</span>
   </td>
 </tr>
 <tr>
   <td colspan="2"></td>
   <td class="subtext">
-    <span class="score" id="score_11510199"><%= @contribution.upvote %> points</span> by <%= @contribution.user.name %>
-    <span class="age"><a href="#"><%= time_ago_in_words(@contribution.created_at) %></a></span> |
-    <a href="#"><%= @contribution.replies.length %> comments</a> |
+    <span class="score" id="score_11510199"><%= @contributions.upvote %> points</span> by <%= @contributions.user.name %>
+    <span class="age"><a href="#"><%= time_ago_in_words(@contributions.created_at) %></a></span> |
+    <a href="#"><%= @contributions.replies.length %> comments</a> |
 </tr>
