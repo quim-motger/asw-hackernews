@@ -19,7 +19,16 @@ class ContributionsController < ApplicationController
     @reply.user = @contribution.user
   end
   
-  
+  def discuss
+    set_contribution
+    if @contribution.contr_type != 'submission'
+      raise ActiveRecord::RecordNotFound, 'Trying to discuss a contribution of type '+@contribution.contr_type
+    end
+    @discuss = Contribution.new
+    @discuss.parent_id = @contribution.id
+    @discuss.contr_type = 'comment'   #no he trobat els tipus de contributions que hi ha per tant inuteixo que es diran aixi
+    @discuss.user = @contribution.user #aqui fico que el comentari es de la mateixa persona que el submision -> per cambiar
+  end
 
   # GET /contributions/1
   # GET /contributions/1.json
