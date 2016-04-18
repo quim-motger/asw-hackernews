@@ -1,4 +1,5 @@
-<% content_for :title, "Discuss - welcome | new | threads | comments | apply | show | ask | jobs | submit                        login" %>
+<% content_for :title, 'Discuss - welcome | new | threads | comments | apply | show | ask | jobs | submit ' %>
+
 <table>
   <%= render 'contribution_detail' %>
 
@@ -8,11 +9,10 @@
   <tr>
     <td colspan="2"></td>
     <td>
-      <%= form_for(@reply) do |f| %>
+      <%= form_for(@discuss) do |f| %>
 
-          <%= f.hidden_field :parent_id, value: @reply.parent_id %>
-          <%= f.hidden_field :user_id, value: @reply.user_id %>
-          <%= f.hidden_field :contr_type, value: @reply.contr_type %>
+          <%= f.hidden_field :user_id, value: @discuss.user_id %>
+          <%= f.hidden_field :contr_type, value: @discuss.contr_type %>
           <%= f.text_area :content, cols: 60, rows: 6 %>
           <div class="actions">
             <%= f.submit 'Add comment' %>
