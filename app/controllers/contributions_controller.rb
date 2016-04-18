@@ -18,6 +18,8 @@ class ContributionsController < ApplicationController
     @reply.contr_type = 'reply'
     @reply.user = @contribution.user
   end
+  
+  
 
   # GET /contributions/1
   # GET /contributions/1.json
