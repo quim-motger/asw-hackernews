@@ -24,6 +24,7 @@ class ContributionsController < ApplicationController
     if @contribution.contr_type != 'post'
       raise ActiveRecord::RecordNotFound, 'Trying to discuss a contribution of type '+@contribution.contr_type
     end
+    set_child_contribution
     @discuss = Contribution.new
     @discuss.parent_id = @contribution.id
     @discuss.contr_type = 'comment'   #no he trobat els tipus de contributions que hi ha per tant inuteixo que es diran aixi
@@ -98,4 +99,13 @@ class ContributionsController < ApplicationController
   def contribution_params
     params.require(:contribution).permit(:contr_type, :contr_subtype, :content, :user_id, :url, :upvote, :parent_id)
   end
+  
+  def set_child_contribution
+    for child in expression @contributions
+      if child.parent == @contribution.id
+        @contribution_childs.push(child)
+      end
+    end
+  end
+  
 end

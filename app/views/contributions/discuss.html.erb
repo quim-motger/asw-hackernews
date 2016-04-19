@@ -26,8 +26,8 @@
 
 <thead>
    <table bgcolor= #f6f6ec width="100%">
-     <% @contributions.each do |contribution| %>
-      <%= render 'contribution_detail' %>
+     <% @contribution_childs.each do |comment| %>
+      <p><%= @comment.content %></p>
       <% end %>                
   </table>
 </thead>
