@@ -15,7 +15,7 @@
     <tr>
       <td>
         <font color="grey">
-          <%= contribution.upvote %> points by <a href="/users/<%= contribution.user%>"><%= contribution.user_id%></a>
+          <%= contribution.upvote %> points by <a href="/users/<%= contribution.user_id%>"><%= contribution.user.name%></a>
           <a href="/contributions/<%= contribution.id %>"><%=( (Time.now() - contribution.created_at)/3600).round %> hours ago</a> | <a href="/contributions/<%= contribution.id %>">0</a> comments
         </font>
       </td>
