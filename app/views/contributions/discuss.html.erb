@@ -24,9 +24,7 @@
 </table>
 
 
-   <table bgcolor= #f6f6ec width="100%">
-     <% @contribution_childs.each do |comment| %>
-      <p><%= @comment.content %></p>
-      <% end %>                
-  </table>
+<%= @contribution_childs.each do |comment| %>
+<p><%= @comment.content %></p>
+<% end %>
  
