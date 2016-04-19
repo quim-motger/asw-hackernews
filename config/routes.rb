@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   get '/reply' => 'contributions#reply'
   get '/discuss' => 'contributions#discuss'
-  
+  get '/newest' => 'contributions#newest'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -62,7 +62,6 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
   
-   root 'users#index'
-   #root 'contributions#discuss'
+  root 'contributions#index'
   
 end
