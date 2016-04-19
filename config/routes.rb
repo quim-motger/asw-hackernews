@@ -4,8 +4,12 @@ Rails.application.routes.draw do
   resources :users
 
   get '/reply' => 'contributions#reply'
+<<<<<<< HEAD
+  get '/newest' => 'contributions#newest'
+=======
   get '/discuss' => 'contributions#discuss'
   
+>>>>>>> master
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -62,7 +66,11 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
   
+<<<<<<< HEAD
+  root 'contributions#index'
+=======
    root 'users#index'
    #root 'contributions#discuss'
+>>>>>>> master
   
 end
