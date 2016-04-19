@@ -13,6 +13,7 @@
 
           <%= f.hidden_field :user_id, value: @discuss.user_id %>
           <%= f.hidden_field :contr_type, value: @discuss.contr_type %>
+          <%= f.hidden_field :parent_id, value: @discuss.id %>
           <%= f.text_area :content, cols: 60, rows: 6 %>
           <div class="actions">
             <%= f.submit 'Add comment' %>
