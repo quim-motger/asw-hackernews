@@ -23,8 +23,12 @@
   </tr>
 </table>
 
-<table>
-  <br></br>
-  <br></br>
-  <%= render 'contribution_childs' %>
-</table> 
+
+<thead>
+   <table bgcolor= #f6f6ec width="100%">
+     <% @contributions.each do |contribution| %>
+      <%= render 'contribution_detail' %>
+      <% end %>                
+  </table>
+</thead>
+ 
