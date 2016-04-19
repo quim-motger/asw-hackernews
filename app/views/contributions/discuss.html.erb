@@ -1,15 +1,12 @@
 <% content_for :title, 'Discuss - welcome | new | threads | comments | apply | show | ask | jobs | submit ' %>
-
-<table>
-  <%= render 'contribution_detail' %>
-</table>
-<% @contribution.replies.each do |comment| %>
-    <p><%= comment.content %> <a href="reply?id=<%= comment.id %>">Reply</a></p>
-    <% comment.replies.each do |reply| %>
-        <p style="margin-left: 20px"><%= reply.content %> </p>
-    <% end %>
-
-
-<% @contribution.replies.each do |comment| %>
-<p><%= comment.content %></p
-<% end %>
+ 
+ <table>
+   <%= render 'contribution_detail' %>
+ </table>
+ <% @contribution.replies.each do |comment| %>
+     <p><%= comment.content %> <a href="reply?id=<%= comment.id %>">Reply</a></p>
+     <% comment.replies.each do |reply| %>
+         <p style="margin-left: 20px"><%= reply.content %> </p>
+     <% end %>
+ 
+ <% end %>
