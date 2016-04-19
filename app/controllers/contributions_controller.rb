@@ -51,8 +51,11 @@ class ContributionsController < ApplicationController
 
     respond_to do |format|
       if @contribution.save
+        print('test')
+        print(@contribution.parent_id)
         if @contribution.contr_type == 'reply'
-          format.html { redirect_to @contribution.parent }
+          format.html { redirect_to action: 'discuss', id: @contribution.parent.parent.id }
+
         else
           format.html { redirect_to @contribution, notice: 'Contribution was successfully created.' }
           format.json { render :show, status: :created, location: @contribution }
