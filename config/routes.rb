@@ -62,6 +62,6 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
   
-  root 'contributions#index'
+  root 'contributions#newest'
   
 end

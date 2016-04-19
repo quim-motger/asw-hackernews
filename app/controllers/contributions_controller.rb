@@ -89,7 +89,7 @@ class ContributionsController < ApplicationController
   end
   
   def newest
-    @contributions = Contribution.where(["contr_type = 'post'"]).all;
+    @contributions = Contribution.where(["contr_type = 'post'"]).all.order('CREATED_AT DESC');
   end  
 
   private
