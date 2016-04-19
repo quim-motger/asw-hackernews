@@ -10,7 +10,7 @@
     <td colspan="2"></td>
     <td>
       <%= form_for(@discuss) do |f| %>
-
+ 
           <%= f.hidden_field :user_id, value: @discuss.user_id %>
           <%= f.hidden_field :contr_type, value: @discuss.contr_type %>
           <%= f.hidden_field :parent_id, value: @discuss.id %>
@@ -24,11 +24,9 @@
 </table>
 
 
-<thead>
    <table bgcolor= #f6f6ec width="100%">
      <% @contribution_childs.each do |comment| %>
       <p><%= @comment.content %></p>
       <% end %>                
   </table>
-</thead>
  
