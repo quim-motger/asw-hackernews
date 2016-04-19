@@ -87,4 +87,8 @@ class ContributionsController < ApplicationController
   def contribution_params
     params.require(:contribution).permit(:contr_type, :contr_subtype, :content, :user_id, :url, :upvote, :parent_id)
   end
+  
+  def newest
+    @contributions = Contribution.find_by contr_type: 'post'
+  end  
 end
