@@ -2,29 +2,14 @@
 
 <table>
   <%= render 'contribution_detail' %>
-
-
-
-
-  <tr>
-    <td colspan="2"></td>
-    <td>
-      <%= form_for(@discuss) do |f| %>
- 
-          <%= f.hidden_field :user_id, value: @discuss.user_id %>
-          <%= f.hidden_field :contr_type, value: @discuss.contr_type %>
-          <%= f.hidden_field :parent_id, value: @discuss.id %>
-          <%= f.text_area :content, cols: 60, rows: 6 %>
-          <div class="actions">
-            <%= f.submit 'Add comment' %>
-          </div>
-      <% end %>
-    </td>
-  </tr>
 </table>
+<% @contribution.replies.each do |comment| %>
+    <p><%= comment.content %> <a href="reply?id=<%= comment.id %>">Reply</a></p>
+    <% comment.replies.each do |reply| %>
+        <p style="margin-left: 20px"><%= reply.content %> </p>
+    <% end %>
 
 
 <% @contribution.replies.each do |comment| %>
 <p><%= comment.content %></p
 <% end %>
- 
