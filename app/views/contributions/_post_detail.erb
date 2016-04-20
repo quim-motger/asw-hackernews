@@ -1,0 +1,20 @@
+<tr class="athing">
+  <td class="ind"></td>
+  <td valign="top" class="votelinks">
+    <a href="#">
+      <div class="votearrow" title="upvote"></div>
+    </a>
+  </td>
+  <td class="default">
+    <div style="margin-top:2px; margin-bottom:-10px;">
+        <span class="comhead">
+          <a href="#">
+            <%= @contribution.user.name %>
+          </a>
+          <%= time_ago_in_words(@contribution.created_at) %>
+          </span>
+    </div>
+    <br>
+    <p><%= @contribution.content %></p>
+</tr>
+<tr style="height:10px"></tr>
