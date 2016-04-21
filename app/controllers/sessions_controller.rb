@@ -5,6 +5,12 @@ class SessionsController < ApplicationController
     redirect_to @user
   end
 
+
+  def destroy
+    log_out
+    redirect_to root_url
+  end
+
   protected
 
   def auth_hash
@@ -14,5 +20,10 @@ class SessionsController < ApplicationController
   # Logs in the given user.
   def log_in(user)
     session[:user_id] = user.id
+  end
+
+  def log_out
+    session.delete(:user_id)
+    @current_user = nil
   end
 end
