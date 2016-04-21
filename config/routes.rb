@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get '/reply' => 'contributions#reply'
   get '/discuss' => 'contributions#discuss'
   get '/newest' => 'contributions#newest'
+
+  get '/auth/:provider/callback', to: 'sessions#create'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
