@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-users = User.create([{name: 'Manolo', password: 'quienbiene'}])
+users = User.create([{name: 'Manolo', email: 'jo@gmail.com'}])
 
 post = Contribution.create({contr_type: 'post', contr_subtype: 'data', content: 'Biene Encarna a hacer rissotto o no biene?', user: users.first})
 comment = Contribution.create({contr_type: 'comment', parent: post, user: users.first, content: 'Quizas biene Perete con la Guitarra?'})
