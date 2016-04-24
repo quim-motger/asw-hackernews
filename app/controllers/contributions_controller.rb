@@ -50,16 +50,26 @@ class ContributionsController < ApplicationController
     
     @contribution = Contribution.new(contribution_params)
     
-    if (@contribution.url != '') 
-      @contribution.contr_subtype= 'url'
-    else @contribution.contr_subtype= 'text'
+    if (@contribution.url.empty?) 
+      @contribution.contr_subtype= 'text'
+    else @contribution.contr_subtype= 'url'
     end
     
     @contribution.user_id = '1'
+    
+    error_info = {
+      :error => "error-parameters-error",
+      :exception => "Please try again",
+    }
 
     respond_to do |format|
-      if (@contribution.url != '' and @contribution.content != '')
-        format.html { redirect_to action: 'new' }
+      if (@contribution.url.empty? and @contribution.content.empty? or 
+        @contribution.title.empty?)
+        format.html { render :new }
+        format.json { render json: error_info.to_json, status: :unprocessable_entity }
+      elsif (!@contribution.url.empty? and @contribution.content.empty?)
+        format.html { render :new }
+        format.json { render json: error_info.to_json, status: :unprocessable_entity }
       elsif @contribution.save
         print('test')
         print(@contribution.parent_id)
