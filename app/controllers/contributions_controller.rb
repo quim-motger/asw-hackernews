@@ -60,9 +60,6 @@ class ContributionsController < ApplicationController
     respond_to do |format|
       if (@contribution.url != '' and @contribution.content != '')
         format.html { redirect_to action: 'new' }
-        format.json { render json: @contribution.errors, status: 'Stories can\'t
-        have both urls and text, so you need to pick one. If you keep the url, 
-        you can always post your text as a comment in the thread. ' }
       elsif @contribution.save
         print('test')
         print(@contribution.parent_id)

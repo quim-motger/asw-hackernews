@@ -24,6 +24,14 @@
               </b>
               <%= yield(:navigation) %>
             </span>
+            <span>new</span> |
+            <span>threads</span> |
+            <span>comments</span> |
+            <span>apply</span> |
+            <span>show</span> |
+            <span>ask</span> |
+            <span>jobs</span> |
+            <span><a href="/contributions/new">submit</a></span>
             <span class="login">
               <% if not logged_in? %>
                   <%= link_to 'Sign in', signin_path(:google) %>
