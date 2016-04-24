@@ -1,0 +1,24 @@
+<% content_for :title, "Submit" %>
+<head>
+</head>
+<body>
+
+   <tr>
+    <td colspan="2"></td>
+    <td>
+      <%= form_for(@submit) do |f| %>
+
+          <%= f.hidden_field :parent_id, value: 'o' %>
+          <%= f.hidden_field :contr_type, value: 'post' %>
+          <%= f.text_field :user_id %>
+          <%= f.text_field :title %>
+          <%= f.text_field :url %>
+          <%= f.text_area :content, cols: 60, rows: 6 %>
+          <div class="actions">
+            <%= f.submit 'Submit' %>
+          </div>
+      <% end %>
+    </td>
+  </tr>
+
+</body>

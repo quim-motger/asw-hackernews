@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   resources :contributions
-  resources :contributions
   resources :users
 
   get '/reply' => 'contributions#reply'
   get '/discuss' => 'contributions#discuss'
   get '/newest' => 'contributions#newest'
+  get '/submit' => 'contributions#submit'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

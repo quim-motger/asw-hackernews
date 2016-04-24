@@ -1,6 +1,7 @@
 class CreateContributions < ActiveRecord::Migration
   def change
     create_table :contributions do |t|
+      t.string :title
       t.string :contr_type
       t.string :contr_subtype
       t.text :content
