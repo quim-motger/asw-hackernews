@@ -1,5 +1,7 @@
 class ContributionsController < ApplicationController
+  include SessionsHelper
   before_action :set_contribution, only: [:show, :edit, :update, :destroy]
+
 
   # GET /contributions
   # GET /contributions.json
@@ -49,30 +51,15 @@ class ContributionsController < ApplicationController
   def create
     
     @contribution = Contribution.new(contribution_params)
-    
-    if (@contribution.url.empty?) 
-      @contribution.contr_subtype= 'text'
-    else @contribution.contr_subtype= 'url'
+
+    if logged_in?
+      @contribution.user_id = current_user.id
+    else
+      @contribution.user_id = '1'
     end
-    
-    @contribution.user_id = '1'
-    
-    error_info = {
-      :error => "error-parameters-error",
-      :exception => "Please try again",
-    }
 
     respond_to do |format|
-      if (@contribution.url.empty? and @contribution.content.empty? or 
-        @contribution.title.empty?)
-        format.html { render :new }
-        format.json { render json: error_info.to_json, status: :unprocessable_entity }
-      elsif (!@contribution.url.empty? and @contribution.content.empty?)
-        format.html { render :new }
-        format.json { render json: error_info.to_json, status: :unprocessable_entity }
-      elsif @contribution.save
-        print('test')
-        print(@contribution.parent_id)
+      if @contribution.save
         if @contribution.contr_type == 'reply'
           format.html { redirect_to action: 'discuss', id: @contribution.parent.parent.id }
         elsif @contribution.contr_type == 'comment'
@@ -123,7 +110,7 @@ class ContributionsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def contribution_params
-    params.require(:contribution).permit(:contr_type, :contr_subtype, :content, :user_id, :url, :upvote, :parent_id)
+    params.require(:contribution).permit(:contr_type, :title, :contr_subtype, :content, :user_id, :url, :upvote, :parent_id)
   end
 
 end
