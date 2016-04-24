@@ -47,7 +47,15 @@ class ContributionsController < ApplicationController
   # POST /contributions
   # POST /contributions.json
   def create
+    
     @contribution = Contribution.new(contribution_params)
+    
+    if (@contribution.url != '') 
+      @contribution.contr_subtype= 'url'
+    else @contribution.contr_subtype= 'text'
+    end
+    
+    @contribution.user_id = '1'
 
     respond_to do |format|
       if @contribution.save
@@ -58,8 +66,7 @@ class ContributionsController < ApplicationController
         elsif @contribution.contr_type == 'comment'
           format.html { redirect_to action: 'discuss', id: @contribution.parent.id }
         else
-          format.html { redirect_to @contribution, notice: 'Contribution was successfully created.' }
-          format.json { render :show, status: :created, location: @contribution }
+          format.html { redirect_to action: 'newest' }
         end
       else
         format.html { render :new }
