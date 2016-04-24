@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   resources :contributions
-  resources :users
 
   get '/reply' => 'contributions#reply'
   get '/discuss' => 'contributions#discuss'
