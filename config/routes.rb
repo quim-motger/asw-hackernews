@@ -1,15 +1,14 @@
 Rails.application.routes.draw do
   resources :contributions
-  resources :contributions
   resources :users
 
   get '/reply' => 'contributions#reply'
   get '/discuss' => 'contributions#discuss'
   get '/newest' => 'contributions#newest'
-
   get '/auth/:provider/callback', to: 'sessions#create'
-
   get '/logout' => 'sessions#destroy'
+  get '/submit' => 'contributions#new'
+
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -66,6 +65,6 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
   
-  root 'contributions#index'
+  root 'contributions#newest'
   
 end

@@ -10,36 +10,34 @@
       </ul>
     </div>
   <% end %>
+  
+  <%= f.hidden_field :contr_type, value: "post" %>
+  <%= f.hidden_field :contr_subtype, value: "" %>
+  <%= f.hidden_field :user_id, value: "" %>
+  <%= f.hidden_field :upvote, value: 0 %>
+  <%= f.hidden_field :parent_id, value: "" %>
+  
+  <table>
+    <tr>
+      <td><font color="grey"><%= f.label "title" %></font></td>
+      <td><%= f.text_field :title , :size=>"50" %></td>
+    </tr>
+    <tr>
+      <td><font color="grey"><%= f.label "url" %></font></td>
+      <td><%= f.text_field :url , :size=>"50" %></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><font color="grey"><strong>or</strong></font></td>
+    </tr>
+    <tr>
+      <td><font color="grey"><%= f.label "text" %></font></td>
+      <td><%= f.text_area :content , :size=>"50" %></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><%= f.submit "submit" %></td>
+    </tr>
+  </table>
 
-  <div class="field">
-    <%= f.label :contr_type %><br>
-    <%= f.text_field :contr_type %>
-  </div>
-  <div class="field">
-    <%= f.label :contr_subtype %><br>
-    <%= f.text_field :contr_subtype %>
-  </div>
-  <div class="field">
-    <%= f.label :content %><br>
-    <%= f.text_area :content %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.text_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :url %><br>
-    <%= f.text_field :url %>
-  </div>
-  <div class="field">
-    <%= f.label :upvote %><br>
-    <%= f.number_field :upvote %>
-  </div>
-  <div class="field">
-    <%= f.label :parent_id %><br>
-    <%= f.text_field :parent_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>

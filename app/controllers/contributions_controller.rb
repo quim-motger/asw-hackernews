@@ -47,10 +47,30 @@ class ContributionsController < ApplicationController
   # POST /contributions
   # POST /contributions.json
   def create
+    
     @contribution = Contribution.new(contribution_params)
+    
+    if (@contribution.url.empty?) 
+      @contribution.contr_subtype= 'text'
+    else @contribution.contr_subtype= 'url'
+    end
+    
+    @contribution.user_id = '1'
+    
+    error_info = {
+      :error => "error-parameters-error",
+      :exception => "Please try again",
+    }
 
     respond_to do |format|
-      if @contribution.save
+      if (@contribution.url.empty? and @contribution.content.empty? or 
+        @contribution.title.empty?)
+        format.html { render :new }
+        format.json { render json: error_info.to_json, status: :unprocessable_entity }
+      elsif (!@contribution.url.empty? and @contribution.content.empty?)
+        format.html { render :new }
+        format.json { render json: error_info.to_json, status: :unprocessable_entity }
+      elsif @contribution.save
         print('test')
         print(@contribution.parent_id)
         if @contribution.contr_type == 'reply'
@@ -58,8 +78,7 @@ class ContributionsController < ApplicationController
         elsif @contribution.contr_type == 'comment'
           format.html { redirect_to action: 'discuss', id: @contribution.parent.id }
         else
-          format.html { redirect_to @contribution, notice: 'Contribution was successfully created.' }
-          format.json { render :show, status: :created, location: @contribution }
+          format.html { redirect_to action: 'newest' }
         end
       else
         format.html { render :new }
@@ -93,7 +112,7 @@ class ContributionsController < ApplicationController
   end
   
   def newest
-    @contributions = Contribution.where(["contr_type = 'post'"]).all;
+    @contributions = Contribution.where(["contr_type = 'post'"]).all.order('CREATED_AT DESC');
   end  
 
   private

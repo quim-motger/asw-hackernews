@@ -4,10 +4,10 @@
 <body>
 
   <table bgcolor= #f6f6ec width="100%">
-    <% @contributions.each do |contribution| %>
+    <% @contributions.each_with_index do |contribution, index| %>
     <tr>
       <td>
-        <font color="grey"><%= contribution.id %></font>
+        <font color="grey"><%= index+1 %>.</font>
         <font color="black"><a href="<%= contribution.url %>"><%= contribution.content%></a></font>
         <font color="grey">(<%= contribution.url %>)</font>
       </td>
