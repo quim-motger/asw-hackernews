@@ -5,3 +5,6 @@
 - Bonafonte Pardàs, Guillem
 - Motger de la Encarnación, Joaquim
 
+### Enllaç a producció
+[Obrir app a Heroku](http://hackersnews.herokuapp.com/)
+

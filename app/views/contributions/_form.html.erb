@@ -10,11 +10,9 @@
       </ul>
     </div>
   <% end %>
+  
+  <%= f.hidden_field :contr_type, value: "post" %>
 
-  <div class="field">
-    <%= f.label :contr_type %><br>
-    <%= f.text_field :contr_type %>
-  </div>
   <div class="field">
     <%= f.label :contr_subtype %><br>
     <%= f.text_field :contr_subtype %>

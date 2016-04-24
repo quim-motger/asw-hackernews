@@ -22,7 +22,16 @@
               <b class="brandname">
                 <%= yield(:title) %>
               </b>
+              <%= yield(:navigation) %>
             </span>
+            <span class="login">
+              <% if not logged_in? %>
+                  <%= link_to 'Sign in', signin_path(:google) %>
+              <% else %>
+                  <%= current_user.email %> |
+                  <%= link_to 'Sign out', controller: 'sessions', action: 'destroy' %>
+              <% end %>
+                 </span>
           </td>
         </tr>
         </tbody>
