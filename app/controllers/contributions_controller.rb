@@ -101,6 +101,10 @@ class ContributionsController < ApplicationController
   def newest
     @contributions = Contribution.where(["contr_type = 'post'"]).all.order('CREATED_AT DESC');
   end  
+  
+  def ask
+    @contributions = Contribution.where(["contr_type = 'post'"]).all.order('CREATED_AT DESC');
+  end  
 
   private
   # Use callbacks to share common setup or constraints between actions.
