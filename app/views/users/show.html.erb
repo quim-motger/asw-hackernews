@@ -9,6 +9,7 @@
   <strong>Email:</strong>
   <%= @user.email %>
 </p>
+<p>
+  Created: <%=time_ago_in_words(@user.created_at)%> ago
+</p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>

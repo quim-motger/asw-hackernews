@@ -38,7 +38,7 @@
               <% if not logged_in? %>
                   <%= link_to 'Sign in', signin_path(:google) %>
               <% else %>
-                  <%= current_user.email %> |
+                  <a href="/user?id=<%=current_user.id%>"><%= current_user.email %></a> |
                   <%= link_to 'Sign out', controller: 'sessions', action: 'destroy' %>
               <% end %>
                  </span>
