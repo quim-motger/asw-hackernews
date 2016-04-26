@@ -27,7 +27,9 @@
               <%= yield(:navigation) %>
             </span>
             <span><a href="/newest">new</a> </span> |
-            <span><a href="/threads">threads</a> </span> |
+            <% if logged_in? %>
+                <span><a href="/threads">threads</a> </span> |
+            <% end %>
             <span>comments</span> |
             <span>apply</span> |
             <span>show</span> |
