@@ -1,9 +1,7 @@
 <tr class="athing">
   <td class="ind"></td>
   <td valign="top" class="votelinks">
-    <a href="#">
-      <div class="votearrow" title="upvote"></div>
-    </a>
+      <%= link_to '<div class="votearrow" title="upvote"></div>', action='create',controller='votes',method='post'%>
   </td>
   <td class="default">
     <div style="margin-top:2px; margin-bottom:-10px;">

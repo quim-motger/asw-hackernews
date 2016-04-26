@@ -54,8 +54,6 @@ class ContributionsController < ApplicationController
 
     if logged_in?
       @contribution.user_id = current_user.id
-    else
-      @contribution.user_id = '1'
     end
 
     respond_to do |format|

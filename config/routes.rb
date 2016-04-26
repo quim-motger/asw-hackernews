@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :votes
   resources :contributions
 
   get '/reply' => 'contributions#reply'
