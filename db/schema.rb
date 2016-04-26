@@ -14,6 +14,7 @@
 ActiveRecord::Schema.define(version: 20160426082606) do
 
   create_table "contributions", force: :cascade do |t|
+    t.string "title"
     t.string   "contr_type"
     t.string   "contr_subtype"
     t.text     "content"
@@ -30,7 +31,7 @@ ActiveRecord::Schema.define(version: 20160426082606) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
-    t.string   "password"
+    t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

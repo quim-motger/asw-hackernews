@@ -1,28 +1,27 @@
-<tr class="athing">
-  <td align="right" valign="top" class="title">
-    <span class="rank"><%= @counter %>.</span>
-  </td>
-  <td valign="top" class="votelinks">
-    <center>
-      <!--TODO: replace # for vote url-->
-      <a id="up_11510199" href="@contribution.vote.url">
-        <div class="votearrow" title="upvote"></div>
-      </a>
-    </center>
-  </td>
-  <td class="title">
-    <span class="deadmark">
-
-    </span>
-    <%= @contributions.content %>
-    <span class="sitebit comhead"> (<a href="#"><span class="sitestr"></span></a>)</span>
+<tr>
+  <td>
+    <font color="grey"><%= index+1 %>.</font>
+    <font color="black">
+      <% unless contribution.url.blank? %>
+          <a href="<%= contribution.url %>">
+      <% end %>
+      <%= contribution.content %>
+      <% unless contribution.url.blank? %>
+          </a>
+      <% end %>
+    </font>
+    <% unless contribution.url.blank? %>
+        <font color="grey">(<%= contribution.url %>)</font>
+    <% end %>
   </td>
 </tr>
 <tr>
-  <td colspan="2"></td>
-  <td class="subtext">
-    <span class="score" id="score_11510199"><%= @contributions.upvote %> points</span> by <%= @contributions.user.name %>
-    <span class="age"><a href="#"><%= time_ago_in_words(@contributions.created_at) %></a></span> |
-    <a href="#"><%= @contributions.replies.length %> comments</a> |
+  <td>
+    <font color="grey">
+      <%= contribution.upvote %> points by <%= contribution.user.name %>
+      <a href="/discuss?id=<%= contribution.id %>"><%= time_ago_in_words(contribution.created_at) %> ago</a> |
+      <a href="/discuss?id=<%= contribution.id %>"><%= contribution.replies.length %></a> comments
+    </font>
   </td>
 </tr>
+<tr class="spacer" style="height:5px"></tr>

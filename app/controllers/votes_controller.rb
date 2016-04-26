@@ -1,4 +1,6 @@
 class VotesController < ApplicationController
+  include SessionsHelper
+  include ApplicationHelper
   before_action :set_vote, only: [:show, :edit, :update, :destroy]
 
   # GET /votes
@@ -15,7 +17,7 @@ class VotesController < ApplicationController
   # GET /votes/new
   def new
     @vote = Vote.new
-    
+
   end
 
   # GET /votes/1/edit
@@ -26,14 +28,17 @@ class VotesController < ApplicationController
   # POST /votes.json
   def create
     @vote = Vote.new(vote_params)
+    if not logged_in?
+      redirect_to signin_path('google')
+    end
 
-    respond_to do |format|
-      if @vote.save
-        @contribution = Contribution.find()
-      else
-        format.html { render :new }
-        format.json { render json: @vote.errors, status: :unprocessable_entity }
-      end
+    if @vote.user_id.nil?
+      @vote.user_id = current_user.id
+    end
+
+
+    if @vote.save
+      redirect_to :back
     end
   end
 
@@ -62,13 +67,13 @@ class VotesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_vote
-      @vote = Vote.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_vote
+    @vote = Vote.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def vote_params
-      params.require(:vote).permit(:user_id, :contribution_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def vote_params
+    params.require(:vote).permit(:user_id, :contribution_id)
+  end
 end
