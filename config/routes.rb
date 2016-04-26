@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get '/logout' => 'sessions#destroy'
   get '/submit' => 'contributions#new'
   get '/ask' => 'contributions#ask'
-  get '/thread' => 'contributions#thread'
+  get '/threads' => 'contributions#threads'
 
   
   # The priority is based upon order of creation: first created -> highest priority.

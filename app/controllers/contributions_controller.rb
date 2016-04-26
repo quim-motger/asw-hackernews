@@ -1,5 +1,5 @@
 class ContributionsController < ApplicationController
-  include SessionsHelper
+  include SessionsHelper, AplicationHelper
   before_action :set_contribution, only: [:show, :edit, :update, :destroy]
 
 
@@ -104,7 +104,15 @@ class ContributionsController < ApplicationController
   
   def ask
     @contributions = Contribution.where(["contr_type = 'post'"]).all.order('CREATED_AT DESC');
-  end  
+  end 
+  
+  def threads
+    if logged_in?
+      @contributions = current_user.contributions
+    else 
+      redirect_to signin_path("google");
+    end  
+  end
 
   private
   # Use callbacks to share common setup or constraints between actions.
