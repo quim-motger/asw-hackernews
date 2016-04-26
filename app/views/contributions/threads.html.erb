@@ -4,9 +4,9 @@
 <body>
 
 <table bgcolor=#f6f6ec width="100%">
-    
 
-  <% @contributions do |contribution| %>
+
+  <% @contributions.each_with_index do |contribution, index| %>
       <tr>
         <td>
           <font color="grey"><%= index+1 %>.</font>

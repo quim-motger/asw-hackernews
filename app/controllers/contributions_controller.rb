@@ -1,5 +1,6 @@
 class ContributionsController < ApplicationController
-  include SessionsHelper, AplicationHelper
+  include SessionsHelper
+  include ApplicationHelper
   before_action :set_contribution, only: [:show, :edit, :update, :destroy]
 
 
