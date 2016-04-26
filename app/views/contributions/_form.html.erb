@@ -1,13 +1,10 @@
 <%= form_for(@contribution) do |f| %>
   <% if @contribution.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@contribution.errors.count, "error") %> prohibited this contribution from being saved:</h2>
-
-      <ul>
       <% @contribution.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+        <font class="message"><%= message %></font><br/>
       <% end %>
-      </ul>
+      <br/>
     </div>
   <% end %>
   

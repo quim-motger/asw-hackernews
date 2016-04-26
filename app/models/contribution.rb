@@ -5,8 +5,9 @@ class Contribution < ActiveRecord::Base
   validates :user_id, presence: true
   validates :contr_subtype, presence: true, if: "contr_type=='post'"
   validates :url, presence: true, if: "contr_type=='post' and contr_subtype=='url'"
+  validates :content, presence: true, if: "contr_type=='post' and contr_subtype=='text'"
   validates :url, :format => URI::regexp(%w(http https)), if: "contr_type=='post' and contr_subtype=='url'"
-  validates :content, :title, presence: true, if: "contr_type=='post' and contr_subtype=='text'"
+  validates :title, presence: true, if: "contr_type=='post'"
 
   after_initialize :init
 
@@ -14,7 +15,7 @@ class Contribution < ActiveRecord::Base
     self.upvote ||= 0
     if self.url.blank?
       self.contr_subtype='text'
-    else
+    elsif self.content.blank?
       self.contr_subtype='url'
     end
   end
