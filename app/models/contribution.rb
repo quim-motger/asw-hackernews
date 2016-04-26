@@ -5,9 +5,9 @@ class Contribution < ActiveRecord::Base
   validates :user_id, presence: true
   validates :contr_subtype, presence: true, if: "contr_type=='post'"
   validates :url, presence: true, if: "contr_type=='post' and contr_subtype=='url'"
+  validates :title, presence: true, if: "contr_type=='post'"
   validates :content, presence: true, if: "contr_type=='post' and contr_subtype=='text'"
   validates :url, :format => URI::regexp(%w(http https)), if: "contr_type=='post' and contr_subtype=='url'"
-  validates :title, presence: true, if: "contr_type=='post'"
 
   after_initialize :init
 

@@ -37,7 +37,7 @@ class ContributionsController < ApplicationController
   def show
   end
 
-  # GET /contributions/new
+  # GET /submit
   def new
     @contribution = Contribution.new
   end
@@ -68,7 +68,7 @@ class ContributionsController < ApplicationController
           format.html { redirect_to action: 'newest' }
         end
       else
-        format.html { render :new }
+        format.html { render :new}
         format.json { render json: @contribution.errors, status: :unprocessable_entity }
       end
     end

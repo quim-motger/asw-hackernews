@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :contributions
 
   get '/reply' => 'contributions#reply'
   get '/discuss' => 'contributions#discuss'
@@ -7,6 +6,7 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#create'
   get '/logout' => 'sessions#destroy'
   get '/submit' => 'contributions#new'
+  post '/contributions' => 'contributions#create'
 
   
   # The priority is based upon order of creation: first created -> highest priority.
