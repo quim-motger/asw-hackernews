@@ -21,7 +21,7 @@ class ContributionsController < ApplicationController
     @reply.contr_type = 'reply'
     @reply.user = @contribution.user
   end
-  
+
   def discuss
     set_contribution
     if @contribution.contr_type != 'post'
@@ -29,7 +29,7 @@ class ContributionsController < ApplicationController
     end
     @discuss = Contribution.new
     @discuss.parent_id = @contribution.id
-    @discuss.contr_type = 'comment'   #no he trobat els tipus de contributions que hi ha per tant inuteixo que es diran aixi
+    @discuss.contr_type = 'comment' #no he trobat els tipus de contributions que hi ha per tant inuteixo que es diran aixi
     @discuss.user = @contribution.user #aqui fico que el comentari es de la mateixa persona que el submision -> per cambiar
   end
 
@@ -50,7 +50,7 @@ class ContributionsController < ApplicationController
   # POST /contributions
   # POST /contributions.json
   def create
-    
+
     @contribution = Contribution.new(contribution_params)
 
     if logged_in?
@@ -98,21 +98,21 @@ class ContributionsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   def newest
     @contributions = Contribution.where(["contr_type = 'post'"]).all.order('CREATED_AT DESC');
-  end  
-  
+  end
+
   def ask
     @contributions = Contribution.where(["contr_type = 'post'  && contr_subtype = 'text'"]).all.order('CREATED_AT DESC');
   end 
-  
+
   def threads
     if logged_in?
-      @contributions = current_user.contributions
-    else 
+      @contributions = Contribution.where("contr_type = 'post' and user_id=?", current_user.id).all.order('CREATED_AT DESC');
+    else
       redirect_to signin_path("google");
-    end  
+    end
   end
 
   private
