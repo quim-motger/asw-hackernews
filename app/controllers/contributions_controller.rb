@@ -1,5 +1,5 @@
 class ContributionsController < ApplicationController
-  include SessionsHelper
+  include SessionsHelper, ApplicationHelper
   before_action :set_contribution, only: [:show, :edit, :update, :destroy]
 
 
@@ -39,6 +39,10 @@ class ContributionsController < ApplicationController
 
   # GET /submit
   def new
+    unless logged_in?
+      redirect_to signin_path('google')
+      return
+    end
     @contribution = Contribution.new
   end
 
@@ -54,8 +58,6 @@ class ContributionsController < ApplicationController
 
     if logged_in?
       @contribution.user_id = current_user.id
-    else
-      @contribution.user_id = '1'
     end
 
     respond_to do |format|
