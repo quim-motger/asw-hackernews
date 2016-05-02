@@ -30,7 +30,7 @@
         <td></td>
         <td>
           <font color="grey">
-            <%= contribution.upvote %> points by 
+            <%= contribution.votes.length %> points by 
             <a href="/user?id=<%= contribution.user.id %>"><%= contribution.user.name %></a>
             <a href="/discuss?id=<%= contribution.id %>"><%= time_ago_in_words(contribution.created_at) %> ago</a> |
             <a href="/discuss?id=<%= contribution.id %>"><%= contribution.replies.length %> comments</a> 
