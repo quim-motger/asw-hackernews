@@ -1,12 +1,14 @@
 Rails.application.routes.draw do
-  resources :contributions
+  resource :contributions
 
   get '/reply' => 'contributions#reply'
   get '/discuss' => 'contributions#discuss'
   get '/newest' => 'contributions#newest'
   get '/auth/:provider/callback', to: 'sessions#create'
+  post '/vote' => 'votes#create'
   get '/logout' => 'sessions#destroy'
   get '/submit' => 'contributions#new'
+  post '/contributions' => 'contributions#create'
   get '/ask' => 'contributions#ask'
   get '/threads' => 'contributions#threads'
 

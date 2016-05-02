@@ -1,9 +1,9 @@
 <% content_for :title, 'Discuss' %>
- 
- <table>
-   <%= render 'post_detail' %>
-   
-   <tr>
+
+<table>
+  <%= render 'post_detail' %>
+
+  <tr>
     <td colspan="2"></td>
     <td>
       <%= form_for(@discuss) do |f| %>
@@ -18,13 +18,14 @@
       <% end %>
     </td>
   </tr>
-  
- </table>
+  <tr>
+    <% @contribution.replies.each do |comment| %>
+        <%= render 'discuss_comment', commentary: comment %>
+        <% comment.replies.each do |reply| %>
+            <td style="margin-left: 20px"><%= render 'discuss_reply', reply: reply %> </td>
+        <% end %>
+    <% end %>
+  </tr>
+</table>
  
  
- <% @contribution.replies.each do |comment| %>
-     <%= render 'discuss_comment', commentary: comment %>
-     <% comment.replies.each do |reply| %>
-         <td style="margin-left: 20px"><%= render 'discuss_reply', reply: reply %> </td>
-     <% end %>
- <% end %>
