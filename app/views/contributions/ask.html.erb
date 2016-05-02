@@ -9,7 +9,7 @@
         <td>
           <font color="grey"><%= index+1 %>.</font>
         </td>
-        <td>
+        <td valign="top">
           <% unless logged_in? and contribution.votes.any? { |v| v.user_id == current_user.id } %>
               <%= link_to '<div class="votearrow" title="upvote"></div>'.html_safe, {:controller => "votes",
                                                                                      :action => "create",
