@@ -104,6 +104,16 @@ class ContributionsController < ApplicationController
     @contributions = Contribution.where(["contr_type = 'post'"]).all.order('CREATED_AT DESC');
   end  
 
+  def usercontributions
+    @user = User.find(params[:id]);
+    @contributions = Contribution.where(["contr_type = 'post'"]).all.order('CREATED_AT DESC');
+  end  
+  
+  def usercomments
+    @user = User.find(params[:id]);
+    @contributions = Contribution.where(["contr_type != 'post'"]).all.order('CREATED_AT DESC');
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_contribution

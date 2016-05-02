@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get '/submit' => 'contributions#new'
   get '/user' => 'users#show'
   post '/contributions' => 'contributions#create'
+  get '/usercontributions' => 'contributions#usercontributions'
+  get '/usercomments' => 'contributions#usercomments'
 
   
   # The priority is based upon order of creation: first created -> highest priority.

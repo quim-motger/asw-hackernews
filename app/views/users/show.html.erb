@@ -12,5 +12,6 @@
 <p>
   Created: <%=time_ago_in_words(@user.created_at)%> ago
 </p>
-<p><a href= "/submit">Comments</a> | <a href= "/contributions">Submisions</a></p>
+
+<p><a href= "/usercomments?id=<%=@user.id%>">Comments</a> | <a href= "/usercontributions?id=<%=@user.id%>">Submisions</a></p>
 
