@@ -23,17 +23,13 @@
 
 
           <font color="black">
-            <% unless contribution.url.blank? %>
-                <a href="<%= contribution.url %>">
-            <% end %>
-            <%= contribution.title %>
-            <% unless contribution.url.blank? %>
-                </a>
+            <a href="/discuss?id=<%= contribution.id %>">
+              <%= contribution.title %>
+            </a>
+            <% if !contribution.url.blank? %>
+                (<a href="<%= contribution.url %>"><%= contribution.url%></a>)
             <% end %>
           </font>
-          <% unless contribution.url.blank? %>
-              <font color="grey">(<%= contribution.url %>)</font>
-          <% end %>
         </td>
       </tr>
       <tr>
