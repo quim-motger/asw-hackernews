@@ -8,14 +8,19 @@
   <td class="default">
     <div style="margin-top:2px; margin-bottom:-10px;">
         <span class="comhead">
-          <a href="#">
-            <%= @contribution.user.name %>
+          <a href="/discuss?id=<%= @contribution.id %>">
+            <%= @contribution.title %>
           </a>
-          <%= time_ago_in_words(@contribution.created_at) %>
+          <% if !@contribution.url.blank? %>
+              (<a href="<%= @contribution.url %>"><%= @contribution.url%></a>)
+          <% end %>
           </span>
     </div>
-    <br>
-    <p><%= @contribution.title %></p>
+    <p><%= @contribution.votes.length %> points by 
+    <a href="/user?id=<%= @contribution.user.id %>"><%= @contribution.user.name %></a> 
+    <a href="/discuss?id=<%= @contribution.id %>"><%= time_ago_in_words(@contribution.created_at) %> ago</a> | 
+    past | web | 
+     <a href="/discuss?id=<%= @contribution.id %>"><%= @contribution.replies.length %> comments</a></p>
     <p><%= @contribution.content %></p>
 </tr>
 <tr style="height:10px"></tr>
