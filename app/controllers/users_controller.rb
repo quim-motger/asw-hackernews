@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :check_login, only: [:edit, :update]
   include ApplicationHelper
   include SessionsHelper
 
@@ -21,8 +22,8 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    # TODO: SHOW 401 error
     if current_user.id != @user.id
+      flash[:status] = 'Non authorized'
       redirect_to root_url
     end
   end
@@ -79,6 +80,12 @@ class UsersController < ApplicationController
     def set_user
       @user = User.find(params[:id])
     end
+
+  def check_login
+    unless logged_in?
+      redirect_to signin_path("google");
+    end
+  end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
