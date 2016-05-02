@@ -14,7 +14,7 @@
             <%= contribution.votes.length %> points by 
             <a href="/user?id=<%= contribution.user.id %>"><%= contribution.user.name %></a>
             <%= time_ago_in_words(contribution.created_at) %> ago
-            | parent | edit | delete | on: 
+            | on: 
             <% if contribution.parent.title.blank? %>
               <a href="/discuss?id=<%= contribution.parent.parent.id %>"><%= contribution.parent.parent.title %></a>
             <% else %>
