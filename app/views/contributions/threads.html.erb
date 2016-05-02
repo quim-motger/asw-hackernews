@@ -15,9 +15,9 @@
             <%= time_ago_in_words(contribution.created_at) %> ago
             | parent | edit | delete | on: 
             <% if contribution.parent.title.blank? %>
-              <a href="/discuss?id=contribution.parent.parent.id"><%= contribution.parent.parent.title %></a>
+              <a href="/discuss?id=<%= contribution.parent.parent.id %>"><%= contribution.parent.parent.title %></a>
             <% else %>
-              <a href="/discuss?id=contribution.parent.id"><%= contribution.parent.title %></a>
+              <a href="/discuss?id=<%= contribution.parent.id %>"><%= contribution.parent.title %></a>
             <% end %>
           </font>
         </td>
