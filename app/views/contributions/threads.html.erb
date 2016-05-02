@@ -8,6 +8,7 @@
 
   <% @contributions.each_with_index do |contribution, index| %>
       <tr>
+        <td><font style="color: orange">*</font></td>
         <td>
           <font color="grey">
             <%= contribution.upvote %> points by 
@@ -23,20 +24,11 @@
         </td>
       </tr>
       <tr>
+        <td></td>
         <td>
-          <font color="grey"><%= index+1 %>.</font>
           <font color="black">
-            <% unless contribution.url.blank? %>
-                <a href="<%= contribution.url %>">
-            <% end %>
             <%= contribution.content %>
-            <% unless contribution.url.blank? %>
-                </a>
-            <% end %>
           </font>
-          <% unless contribution.url.blank? %>
-              <font color="grey">(<%= contribution.url %>)</font>
-          <% end %>
         </td>
       </tr>
       <tr class="spacer" style="height:5px"></tr>
