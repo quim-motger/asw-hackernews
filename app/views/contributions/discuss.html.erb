@@ -3,21 +3,28 @@
 <table>
   <%= render 'post_detail' %>
 
-  <tr>
-    <td colspan="2"></td>
-    <td>
-      <%= form_for(@discuss) do |f| %>
+  <% if logged_in? %>
+      <tr>
+        <td colspan="2"></td>
+        <td>
+          <%= form_for(@discuss) do |f| %>
 
-          <%= f.hidden_field :parent_id, value: @discuss.parent_id %>
-          <%= f.hidden_field :user_id, value: @discuss.user_id %>
-          <%= f.hidden_field :contr_type, value: @discuss.contr_type %>
-          <%= f.text_area :content, cols: 60, rows: 6 %>
-          <div class="actions">
-            <%= f.submit 'Comment' %>
-          </div>
-      <% end %>
-    </td>
-  </tr>
+              <%= f.hidden_field :parent_id, value: @discuss.parent_id %>
+              <%= f.hidden_field :user_id, value: @discuss.user_id %>
+              <%= f.hidden_field :contr_type, value: @discuss.contr_type %>
+              <%= f.text_area :content, cols: 60, rows: 6 %>
+              <div class="actions">
+                <%= f.submit 'Comment' %>
+              </div>
+          <% end %>
+        </td>
+      </tr>
+  <% else %>
+      <tr>
+        <td colspan="2"></td>
+        <td><%= link_to 'Sign in to reply', signin_path(:google) %></td>
+      </tr>
+  <% end %>
   <tr>
     <% @contribution.replies.each do |comment| %>
         <%= render 'discuss_comment', commentary: comment %>

@@ -1,5 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :check_login, only: [:edit, :update]
+  include ApplicationHelper
+  include SessionsHelper
 
   # GET /users
   # GET /users.json
@@ -19,6 +22,10 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    if current_user.id != @user.id
+      flash[:status] = 'Non authorized'
+      redirect_to root_url
+    end
   end
 
   # POST /users
@@ -53,9 +60,13 @@ class UsersController < ApplicationController
   end
   
   def update
+    if current_user.id != @user.id
+      # TODO: SHOW 401 error
+      redirect_to root_url
+    end
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to action: 'paginap', id: @user.id }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -79,6 +90,12 @@ class UsersController < ApplicationController
     def set_user
       @user = User.find(params[:id])
     end
+
+  def check_login
+    unless logged_in?
+      redirect_to signin_path("google");
+    end
+  end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
