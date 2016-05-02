@@ -1,0 +1,38 @@
+<% content_for :title, "Hacker News" %>
+<head>
+</head>
+<body>
+
+<table bgcolor=#f6f6ec width="100%">
+  <% @contributions.each_with_index do |contribution, index| %>
+      <tr>
+        <td>
+          <font color="grey"><%= index+1 %>.</font>
+          <font color="black">
+            <% unless contribution.url.blank? %>
+                <a href="<%= contribution.url %>">
+            <% end %>
+            <%= contribution.content %>
+            <% unless contribution.url.blank? %>
+                </a>
+            <% end %>
+          </font>
+          <% unless contribution.url.blank? %>
+              <font color="grey">(<%= contribution.url %>)</font>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <font color="grey">
+            <%= contribution.upvote %> points by <%= contribution.user.name %>
+            <a href="/discuss?id=<%= contribution.id %>"><%= time_ago_in_words(contribution.created_at) %> ago</a> |
+            <a href="/discuss?id=<%= contribution.id %>"><%= contribution.replies.length %></a> comments
+          </font>
+        </td>
+      </tr>
+      <tr class="spacer" style="height:5px"></tr>
+  <% end %>
+</table>
+
+</body>

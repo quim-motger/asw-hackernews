@@ -1,0 +1,46 @@
+<% content_for :title, "Hacker News" %>
+<head>
+</head>
+<body>
+
+<table bgcolor=#f6f6ec width="100%">
+
+
+  <% @contributions.each_with_index do |contribution, index| %>
+      <tr>
+        <td>
+          <font color="grey">
+            <%= contribution.upvote %> points by 
+            <a href="/user?id=<%= contribution.user.id %>"><%= contribution.user.name %></a>
+            <%= time_ago_in_words(contribution.created_at) %> ago
+            | parent | edit | delete | on: 
+            <% if contribution.parent.title.blank? %>
+              <a href="/discuss?id=contribution.parent.parent.id"><%= contribution.parent.parent.title %></a>
+            <% else %>
+              <a href="/discuss?id=contribution.parent.id"><%= contribution.parent.title %></a>
+            <% end %>
+          </font>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <font color="grey"><%= index+1 %>.</font>
+          <font color="black">
+            <% unless contribution.url.blank? %>
+                <a href="<%= contribution.url %>">
+            <% end %>
+            <%= contribution.content %>
+            <% unless contribution.url.blank? %>
+                </a>
+            <% end %>
+          </font>
+          <% unless contribution.url.blank? %>
+              <font color="grey">(<%= contribution.url %>)</font>
+          <% end %>
+        </td>
+      </tr>
+      <tr class="spacer" style="height:5px"></tr>
+  <% end %>
+</table>
+
+</body>

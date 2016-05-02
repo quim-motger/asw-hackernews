@@ -27,11 +27,13 @@
               <%= yield(:navigation) %>
             </span>
             <span><a href="/newest">new</a> </span> |
-            <span>threads</span> |
+            <% if logged_in? %>
+                <span><a href="/threads">threads</a> </span> |
+            <% end %>
             <span>comments</span> |
             <span>apply</span> |
             <span>show</span> |
-            <span>ask</span> |
+            <span><a href="/ask">ask</a> </span> |
             <span>jobs</span> |
             <span><a href="/submit">submit</a></span>
             <span class="login">
