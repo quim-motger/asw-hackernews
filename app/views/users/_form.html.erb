@@ -1,25 +1,39 @@
-<%= form_for(@user) do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<tr class="grey">
+  <td>
+    <table>
+      <%= form_for(@user, url: (url_for controller: :users, action: :update, id: @user.id)) do |f| %>
+          <% if @user.errors.any? %>
+              <tr>
+                <td>
+                  <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <ul>
+                    <% @user.errors.full_messages.each do |message| %>
+                        <li><%= message %></li>
+                    <% end %>
+                  </ul>
+                </td>
+              </tr>
+          <% end %>
 
-      <ul>
-      <% @user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+          <tr>
+            <td valign="top"><%= f.label :name %></td>
+            <td><%= f.text_field :name %></td>
+            <td><%= f.hidden_field :id %></td>
+          </tr>
+          <tr>
+          </tr>
+          <tr>
+            <td valign="top"><%= f.label :email %></td>
+            <td><%= @user.email %></td>
+          </tr>
+          <tr>
+            <td><%= f.submit %></td>
+          </tr>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+    </table>
+  </td>
+</tr>
