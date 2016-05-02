@@ -36,8 +36,12 @@
             <td valign="top"><%= f.label :email %></td>
             <td><%= @user.email %></td>
           </tr>
+
           <tr>
             <td><%= f.submit %></td>
+          </tr>
+          <tr>
+            <td><a href="/threads?id=<%= @user.id %>"><u>comments</u></a></td>
           </tr>
       <% end %>
     </table>

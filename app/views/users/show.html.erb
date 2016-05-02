@@ -1,14 +1,26 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<% content_for :title, 'User' %>
+<tr class="grey">
+  <td>
+    <table border="0">
+      <tbody>
+      <tr>
+        <td valign="top">Name:</td>
+        <td><%= @user.name %></td>
+      </tr>
+      <tr>
+        <td valign="top">Email :</td>
+        <td><%= @user.email %></td>
+      </tr>
+      <tr>
+        <td valign="top">Karma:</td>
+        <td> <%= @karma %> </td>
+      </tr>
+      <tr>
+        <td valign="top">created:</td>
+        <td> <%= time_ago_in_words(@user.created_at) %> ago</td>
+      </tr>
+      </tbody>
+    </table>
+    <br><br>
+  </td>
+</tr>

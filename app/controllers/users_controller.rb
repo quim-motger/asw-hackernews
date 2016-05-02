@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :check_login, only: [:edit, :update]
-  before_action :set_karma, only: [:paginap, :edit]
+  before_action :set_karma, only: [:show, :edit]
   include ApplicationHelper
   include SessionsHelper
 
@@ -9,11 +9,6 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
-  end
-
-  # GET /users/1
-  # GET /users/1.json
-  def show
   end
 
   # GET /users/new
@@ -45,7 +40,10 @@ class UsersController < ApplicationController
     end
   end
 
-  def paginap
+  def show
+    if logged_in? and current_user.id == @user.id
+      render :edit, id: @user.id
+    end
   end
 
   # PATCH/PUT /users/1
@@ -59,7 +57,7 @@ class UsersController < ApplicationController
     end
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to action: 'paginap', id: @user.id }
+        format.html { redirect_to action: 'show', id: @user.id }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
