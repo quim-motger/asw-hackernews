@@ -11,7 +11,7 @@
         <td><font style="color: orange">*</font></td>
         <td>
           <font color="grey">
-            <%= contribution.upvote %> points by 
+            <%= contribution.votes.length %> points by 
             <a href="/user?id=<%= contribution.user.id %>"><%= contribution.user.name %></a>
             <%= time_ago_in_words(contribution.created_at) %> ago
             | parent | edit | delete | on: 
