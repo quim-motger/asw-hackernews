@@ -25,6 +25,12 @@
             <td><%= f.hidden_field :id %></td>
           </tr>
           <tr>
+            <td valign="top">Karma:</td>
+            <td> <%= @karma %> </td>
+          </tr>
+          <tr>
+            <td valign="top">created:</td>
+            <td> <%= time_ago_in_words(@user.created_at) %> ago</td>
           </tr>
           <tr>
             <td valign="top"><%= f.label :email %></td>
