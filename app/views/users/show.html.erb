@@ -1,17 +1,34 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
+<% if @user.id == current_user.id %>
+  <p>
+    <strong>Name:</strong>
+    <%= @user.name %>
+  </p>
+  
+  <p>
+    <strong>Email:</strong>
+    <%= @user.email %>
+  </p>
+  <p>
+    Created: <%=time_ago_in_words(@user.created_at)%> ago
+  </p>
+  
+  <p><a href= "/edit?id=<%=@user.id%>">Edit</a> | <a href= "/usercomments?id=<%=@user.id%>">Comments</a> | <a href= "/usercontributions?id=<%=@user.id%>">Submisions</a></p>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-<p>
-  Created: <%=time_ago_in_words(@user.created_at)%> ago
-</p>
-
-<p><a href= "/usercomments?id=<%=@user.id%>">Comments</a> | <a href= "/usercontributions?id=<%=@user.id%>">Submisions</a></p>
-
+<% else %>
+  <p>
+    <strong>Name:</strong>
+    <%= @user.name %>
+  </p>
+  
+  <p>
+    <strong>Email:</strong>
+    <%= @user.email %>
+  </p>
+  <p>
+    Created: <%=time_ago_in_words(@user.created_at)%> ago
+  </p>
+  
+  <p><a href= "/usercomments?id=<%=@user.id%>">Comments</a> | <a href= "/usercontributions?id=<%=@user.id%>">Submisions</a></p>
+<% end %>

@@ -2,5 +2,4 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+<a href= '/user?id=<%=current_user.id%>'>Show</a>| <a href= '/newest'>Back</a>
