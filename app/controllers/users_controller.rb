@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :check_login, only: [:edit, :update]
+  before_action :set_karma, only: [:show, :edit]
   include ApplicationHelper
   include SessionsHelper
 
@@ -8,11 +9,6 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
-  end
-
-  # GET /users/1
-  # GET /users/1.json
-  def show
   end
 
   # GET /users/new
@@ -44,21 +40,16 @@ class UsersController < ApplicationController
     end
   end
 
-  def paginap
-    set_user
-    set_karma
-  end
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
-  
-  def set_karma
-    set_user
-    @karma=0
-    @user.contributions.each do |i|
-        @karma+=i.votes.length
+  def show
+    if logged_in? and current_user.id == @user.id
+      render :edit, id: @user.id
     end
   end
-  
+
+  # PATCH/PUT /users/1
+  # PATCH/PUT /users/1.json
+
+
   def update
     if current_user.id != @user.id
       # TODO: SHOW 401 error
@@ -66,7 +57,7 @@ class UsersController < ApplicationController
     end
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to action: 'paginap', id: @user.id }
+        format.html { redirect_to action: 'show', id: @user.id }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -86,10 +77,18 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  def set_karma
+    set_user
+    @karma=0
+    @user.contributions.each do |i|
+      @karma+=i.votes.length
     end
+  end
 
   def check_login
     unless logged_in?
@@ -97,8 +96,8 @@ class UsersController < ApplicationController
     end
   end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.require(:user).permit(:name, :email)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def user_params
+    params.require(:user).permit(:name, :email)
+  end
 end

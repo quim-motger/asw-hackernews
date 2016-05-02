@@ -8,12 +8,11 @@ Rails.application.routes.draw do
   post '/vote' => 'votes#create'
   get '/logout' => 'sessions#destroy'
   get '/submit' => 'contributions#new'
-  get '/user' => 'users#paginap'
+  get '/user' => 'users#show'
   post '/contributions' => 'contributions#create'
   get '/ask' => 'contributions#ask'
   get '/threads' => 'contributions#threads'
-  get '/users' => 'users#edit'
-  patch '/users' => 'users#update'
+  patch '/user' => 'users#update'
 
   
   # The priority is based upon order of creation: first created -> highest priority.
