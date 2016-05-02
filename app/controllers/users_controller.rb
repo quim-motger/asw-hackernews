@@ -39,9 +39,19 @@ class UsersController < ApplicationController
 
   def paginap
     set_user
+    set_karma
   end
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
+  
+  def set_karma
+    set_user
+    @karma=0
+    @user.contributions.each do |i|
+        @karma+=i.votes.length
+    end
+  end
+  
   def update
     respond_to do |format|
       if @user.update(user_params)
