@@ -21,3 +21,15 @@
 
 en:
   hello: "Hello world"
+  
+en:
+  activerecord:
+    attributes:
+      contribution:
+        contr_subtype: "Contribution subtype"
+    errors:
+      models:
+        contribution:
+          attributes:
+            contr_subtype:
+              blank: "must be url or text, but not both"

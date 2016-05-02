@@ -1,14 +1,31 @@
 <tr class="athing">
-    <td><table style="margin-left:50px" border="0">  
-    <tbody><tr><td class="ind"></td>
-    <td valign="top" class="votelinks"><center>
-        <a id="up_11525706">
-            <div class="votearrow" title="upvote"></div></a></center></td><td class="default">
-                <div style="margin-top:2px; margin-bottom:-10px;"><span class="comhead">
-          <a><%= reply.user.name %></a> <span class="age"> <%= time_ago_in_words(reply.created_at) %></a>
-          </span> <span class="par"></span><span class="deadmark"></span>          <span class="storyon"></span>
-                  </span></div><br><span class="comment">
-                  <span style="height:10px" class="c00"><%= reply.content %><span>
-              </span><div class="reply"></div></span></span></td></tr>
-      </tbody></table></td></tr>
+  <td></td>
+  <td colspan="2">
+    <table style="margin-left:50px" border="0">
+      <tbody>
+      <tr>
+        <td class="ind"></td>
+        <td valign="top" class="votelinks">
+          <% unless logged_in? and reply.votes.any? { |v| v.user_id == current_user.id } %>
+              <%= link_to '<div class="votearrow" title="upvote"></div>'.html_safe, {:controller => "votes",
+                                                                                     :action => "create",
+                                                                                     :vote => {
+                                                                                         :contribution_id => reply.id
+                                                                                     }},
+                          :method => "post" %>
+          <% end %>
+        </td>
+        <td class="default">
+          <%= reply.user.name %>  <%= time_ago_in_words(reply.created_at) %>
+          <br>
+          <span class="comment">
+                  <%= reply.content %>
+          </span><br>
+          <%= reply.votes.length %> votes
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </td>
+</tr>
       
