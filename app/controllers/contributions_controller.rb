@@ -70,7 +70,7 @@ class ContributionsController < ApplicationController
           format.html { redirect_to action: 'newest' }
         end
       else
-        format.html { render :new}
+        format.html { render :new }
         format.json { render json: @contribution.errors, status: :unprocessable_entity }
       end
     end
@@ -101,12 +101,12 @@ class ContributionsController < ApplicationController
   end
 
   def newest
-    @contributions = Contribution.where(["contr_type = 'post'"]).all.order('CREATED_AT DESC');
+    @contributions = Contribution.where(["contr_type = 'post' and contr_subtype='url'"]).all.order('CREATED_AT DESC');
   end
 
   def ask
     @contributions = Contribution.where(["contr_type = 'post'  and contr_subtype = 'text'"]).all.order('CREATED_AT DESC');
-  end 
+  end
 
   def threads
     if logged_in?
