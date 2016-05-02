@@ -110,7 +110,7 @@ class ContributionsController < ApplicationController
 
   def threads
     if logged_in?
-      @contributions = Contribution.where("contr_type = 'comment' or contr_type = 'reply' and user_id=?", current_user.id).all.order('CREATED_AT DESC');
+      @contributions = Contribution.where("contr_type = 'comment' or contr_type = 'reply' and user_id=?", params[:id]).all.order('CREATED_AT DESC');
     else
       redirect_to signin_path("google");
     end
