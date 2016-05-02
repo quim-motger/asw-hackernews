@@ -19,13 +19,14 @@
         <td></td>
         <td><a href="/threads?id=<%= @user.id %>"><u>comments</u></a></td>
       </tr>
-      <% unless @user.id == current_user.id %>
-          <tr>
-            <td></td>
-            <td><%= link_to 'Edit', controller: :users, action: :edit %></td>
-          </tr>
+      <% if logged_in? %>
+        <% unless @user.id != current_user.id %>
+            <tr>
+              <td></td>
+              <td><a href="/users?id=<%=@user.id %>">Edit</a></td>
+            </tr>
+        <% end %>
       <% end %>
-
       </tbody>
     </table>
     <br><br>
