@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  include ApplicationHelper
+  include SessionsHelper
 
   # GET /users
   # GET /users.json
@@ -19,6 +21,10 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    # TODO: SHOW 401 error
+    if current_user.id != @user.id
+      redirect_to root_url
+    end
   end
 
   # POST /users
@@ -43,6 +49,10 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    if current_user.id != @user.id
+      # TODO: SHOW 401 error
+      redirect_to root_url
+    end
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to action: 'paginap', id: @user.id }
