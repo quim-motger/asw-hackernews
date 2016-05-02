@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post '/vote' => 'votes#create'
   get '/logout' => 'sessions#destroy'
   get '/submit' => 'contributions#new'
+  get '/user' => 'users#paginap'
   post '/contributions' => 'contributions#create'
 
   

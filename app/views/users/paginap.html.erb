@@ -1,0 +1,8 @@
+<tr><td><table border="0"><tbody><tr><td valign="top">user:</td>
+<td><a href="user?id=<%=@user.id%>"><%=@user.name%></a></td></tr>
+
+    <tr><td valign="top">created:</td><td> <%= time_ago_in_words(@user.created_at) %></td></tr>
+                <tr><td></td><td><a href="submissions?id=<%=@user.id%>"><u>submissions</u></a></td></tr>
+                <tr><td></td><td><a href="threads?id=<%=@user.id%>"><u>comments</u></a></td></tr></tbody></table>
+<br><br>
+</td></tr>
