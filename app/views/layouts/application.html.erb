@@ -28,7 +28,7 @@
             </span>
             <span><a href="/newest">new</a> </span> |
             <% if logged_in? %>
-                <span><a href="/threads">threads</a> </span> |
+                <span><a href="/threads?id=<%= current_user.id %>">threads</a> </span> |
             <% end %>
             <span>comments</span> |
             <span>apply</span> |
