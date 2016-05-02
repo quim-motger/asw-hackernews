@@ -19,7 +19,6 @@
     <p><%= @contribution.votes.length %> points by 
     <a href="/user?id=<%= @contribution.user.id %>"><%= @contribution.user.name %></a> 
     <a href="/discuss?id=<%= @contribution.id %>"><%= time_ago_in_words(@contribution.created_at) %> ago</a> | 
-    past | web | 
      <a href="/discuss?id=<%= @contribution.id %>"><%= @contribution.replies.length %> comments</a></p>
     <p><%= @contribution.content %></p>
 </tr>
