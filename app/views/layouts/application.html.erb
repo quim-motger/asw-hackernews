@@ -37,7 +37,10 @@
               <% if not logged_in? %>
                   <%= link_to 'Sign in', signin_path(:google) %>
               <% else %>
-                  <%= link_to current_user.email, controller: :users, action: :show, id: current_user.id %> |
+                  <a href="/user?id=<%= current_user.id %>" data-no-turbolink="true"> <%= current_user.email %></a>
+                  <!--TODO: SOLVE THE TURBO LINK-->
+                  <!--<%= link_to current_user.email, controller: :users, action: :show, id: current_user.id, data: {:no_turbolink => true} %>-->
+                  |
                   <%= link_to 'Sign out', controller: 'sessions', action: 'destroy' %>
               <% end %>
                  </span>
