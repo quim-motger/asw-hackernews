@@ -27,19 +27,22 @@ class VotesController < ApplicationController
   # POST /votes
   # POST /votes.json
   def create
-    @vote = Vote.new(vote_params)
-    unless logged_in?
-      redirect_to signin_path('google')
-      return
-    end
+    respond_to do |format|
+      @vote = Vote.new(vote_params)
+      unless logged_in? or format.json
+        redirect_to signin_path('google')
+        return
+      end
 
-    @vote.user_id = current_user.id
+      @vote.user_id = current_user.id
 
 
-    if @vote.save
-      redirect_to :back
-    else
-      redirect_to :back
+      if @vote.save
+        format.html { redirect_to :back }
+        format.json { render :show, status: :ok, location: @vote }
+      else
+        redirect_to :back
+      end
     end
   end
 

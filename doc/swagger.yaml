@@ -6,10 +6,44 @@ swagger: '2.0'
 # This is your document metadata
 info:
   version: "0.0.0"
-  title: <enter your title>
+  title: HackerNews
+
+securityDefinitions:
+  apiKey:
+    type: apiKey
+    description: Té la clau de usuari generada. Es pot extreure desde la interficie grafica de la aplicació
+    name: api_key
+    in: header
 
 # Describe your paths here
 paths:
+  /api/votes:
+    post:
+      security:
+        - apiKey: []
+      description: |
+        Creates new vote.
+      parameters:
+        -
+          name: contribution_id
+          in: formData
+          description: Contribution identifier
+          required: true
+          type: number
+      responses:
+        200:
+          description: Succesfully created
+          schema:
+            title: vote
+            type: object
+            properties:
+              contribution_id:
+                type: integer
+              user_id:
+                type: integer
+
+
+
   # This is a path endpoint. Change it.
   /persons:
     # This is a HTTP operation

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get '/threads' => 'contributions#threads'
   patch '/user' => 'users#update'
 
+  post '/api/votes' => 'votes#create'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
