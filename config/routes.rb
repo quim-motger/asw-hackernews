@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get '/api/posts/:id' => 'contributions#api_post'
   get '/api/comments/:id' => 'contributions#api_comment'
 
+  post '/api/votes' => 'votes#create'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
