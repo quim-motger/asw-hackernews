@@ -29,7 +29,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Post'
+              $ref: '#/definitions/Ask'
         default:
           description: Unexpected error
           schema:
@@ -46,7 +46,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Post'
+              $ref: '#/definitions/Url'
         default:
           description: Unexpected error
           schema:
@@ -71,8 +71,12 @@ paths:
       security:
         - apiKey: []
       description: |
-        Retorna els comentaris d'un post
+        Retorna la informació d'un comentari
       responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/Comment'
         default:
           description: Unexpected error
           schema:
@@ -82,8 +86,6 @@ definitions:
     type: object
     properties:
       title:
-        type: string
-      contr_type:
         type: string
       contr_subtype:
         type: string
@@ -95,7 +97,50 @@ definitions:
         type: string
       upvote:
         type: integer
-      parent_id: 
+      created_at:
+        type: string
+      updated_at:
+        type: string
+  Ask:
+    type: object
+    properties:
+      title:
+        type: string
+      content:
+        type: string
+      user_id:
+        type: integer
+      upvote:
+        type: integer
+      created_at:
+        type: string
+      updated_at:
+        type: string
+  Url:
+    type: object
+    properties:
+      title:
+        type: string
+      user_id:
+        type: integer
+      url:
+        type: string
+      upvote:
+        type: integer
+      created_at:
+        type: string
+      updated_at:
+        type: string
+  Comment:
+    type: object
+    properties:
+      content:
+        type: string
+      user_id:
+        type: integer
+      parent_id:
+        type: integer
+      upvote:
         type: integer
       created_at:
         type: string
