@@ -47,3 +47,11 @@ paths:
                   type: string
                 single:
                   type: boolean
+  
+  /api/posts/ask:
+    get:
+      summary: Ask posts list
+      description: |
+        Gets a list of all "Ask" posts ordered by publication time.
+        
+        
