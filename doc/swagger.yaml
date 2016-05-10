@@ -5,53 +5,109 @@ swagger: '2.0'
 
 # This is your document metadata
 info:
-  version: "0.0.0"
-  title: <enter your title>
+  version: "0.0.1"
+  title: HackerNews
+  
+securityDefinitions:
+  apiKey:
+    type: apiKey
+    description: Té la clau de usuari generada. Es pot extreure desde la interficie grafica de la aplicació
+    name: api_key
+    in: header
 
 # Describe your paths here
 paths:
-  # This is a path endpoint. Change it.
-  /persons:
-    # This is a HTTP operation
-    get:
-      # Describe this verb here. Note: you can use markdown
-      description: |
-        Gets `Person` objects.
-        Optional query param of **size** determines
-        size of returned array
-      # This is array of GET operation parameters:
-      parameters:
-        # An example parameter that is in query and is required
-        -
-          name: size
-          in: query
-          description: Size of array
-          required: true
-          type: number
-          format: double
-      # Expected responses for this operation:
-      responses:
-        # Response code
-        200:
-          description: Successful response
-          # A schema describing your response object.
-          # Use JSON Schema format
-          schema:
-            title: ArrayOfPersons
-            type: array
-            items:
-              title: Person
-              type: object
-              properties:
-                name:
-                  type: string
-                single:
-                  type: boolean
-  
   /api/posts/ask:
     get:
-      summary: Ask posts list
+      security:
+        - apiKey: []
       description: |
-        Gets a list of all "Ask" posts ordered by publication time.
-        
-        
+        Retorna una llista de posts de tipus "Ask" ordenades cronològicament per data de publicació
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Post'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /api/posts/url:
+    get:
+      security:
+        - apiKey: []
+      description: |
+        Retorna una llista de posts de tipus "Url" ordenades cronològicament per data de publicació
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Post'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /api/posts/:id:
+    get:
+      security:
+        - apiKey: []
+      description: |
+        Retorna la informació d'un post
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/Post'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /api/comments/:id:
+    get:
+      security:
+        - apiKey: []
+      description: |
+        Retorna els comentaris d'un post
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  Post:
+    type: object
+    properties:
+      title:
+        type: string
+      contr_type:
+        type: string
+      contr_subtype:
+        type: string
+      content:
+        type: string
+      user_id:
+        type: integer
+      url:
+        type: string
+      upvote:
+        type: integer
+      parent_id: 
+        type: integer
+      created_at:
+        type: string
+      updated_at:
+        type: string
+  Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        fields:
+          type: string
