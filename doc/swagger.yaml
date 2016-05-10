@@ -14,7 +14,8 @@ securityDefinitions:
     description: Té la clau de usuari generada. Es pot extreure desde la interficie grafica de la aplicació
     name: api_key
     in: header
-
+produces:
+  - application/json
 # Describe your paths here
 paths:
   /api/posts/ask:
