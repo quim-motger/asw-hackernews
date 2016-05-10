@@ -47,3 +47,83 @@ paths:
                   type: string
                 single:
                   type: boolean
+                  
+  /api/posts:
+    post:
+      description: |
+        Create a new post, question or link
+      parameters:
+        - name: token
+          in: header
+          description: Autentificator token
+          required: true
+          type: String
+          format: ???
+        - name: title
+          in: body
+          description: title of the submission
+          required: true
+          type: text
+          format: ???
+        - name: url
+          in: body
+          description: Url of the link (empty if question)
+          required: false
+          type: url
+          format: ???
+        - name: text
+          in: body
+          description: Text of the question (empty if link)
+          required: false (ccant be false both)
+          type: text
+          format: ???
+      
+      responses:
+        200:
+          description: Successfully created
+          schema:
+            $ref: '#/definitions/Succes'
+        403:
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error403'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+          
+          
+          
+          /api/comments:
+    post:
+      description: |
+        Create a new comment of a post
+      parameters:
+        - name: token
+          in: header
+          description: Autentificator token
+          required: true
+          type: String
+          format: ???
+        - name: comment
+          in: body
+          description: body of the comment
+          required: true
+          type: text
+          format: ???
+      
+      responses:
+        200:
+          description: Successfully created
+          schema:
+            $ref: '#/definitions/Succes'
+        403:
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error403'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+          
+          
