@@ -117,25 +117,33 @@ class ContributionsController < ApplicationController
   end
   
   def api_url
-    @contributions = Contribution.where(["contr_type = 'post' and contr_subtype='url'"]).all.order('CREATED_AT DESC');
-    format.json { render json: @contributions, status: :ok }
+    respond_to do |format|
+      @contributions = Contribution.where(["contr_type = 'post' and contr_subtype='url'"]).all.order('CREATED_AT DESC');
+      format.json { render json: @contributions, status: :ok }
+    end
   end
   
   def api_ask
-    @contributions = Contribution.where(["contr_type = 'post'  and contr_subtype = 'text'"]).all.order('CREATED_AT DESC');
-    format.json { render json: @contributions, status: :ok }
+    respond_to do |format|
+      @contributions = Contribution.where(["contr_type = 'post'  and contr_subtype = 'text'"]).all.order('CREATED_AT DESC');
+      format.json { render json: @contributions, status: :ok }
+    end
   end
   
   def api_comment
-    set_contribution
-    return status 404 if @contribution.nil? || (@contribution.contr_type != 'comment' && @contribution.contr_type != 'reply')
-    format.json { render json: @contribution, status: :ok }
+    respond_to do |format|
+      set_contribution
+      return status 404 if @contribution.nil? || (@contribution.contr_type != 'comment' && @contribution.contr_type != 'reply')
+      format.json { render json: @contribution, status: :ok }
+    end
   end
   
   def api_post
-    set_contribution
-    return status 404 if @contribution.nil? || @contribution.contr_type != 'post'
-    format.json { render json: @contribution, status: :ok }
+    respond_to do |format|
+      set_contribution
+      return status 404 if @contribution.nil? || @contribution.contr_type != 'post'
+      format.json { render json: @contribution, status: :ok }
+    end
   end
   
   private
