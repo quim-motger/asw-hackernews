@@ -53,12 +53,19 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
-  /api/posts/:id:
+  /api/posts/{id}:
     get:
       security:
         - apiKey: []
       description: |
         Retorna la informació d'un post
+      parameters:
+        - name: id
+          in: path
+          description: ID del post (ask o url)
+          required: true
+          type: integer
+          format: int64
       responses:
         200:
           description: Successful response
@@ -68,12 +75,19 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
-  /api/comments/:id:
+  /api/comments/{id}:
     get:
       security:
         - apiKey: []
       description: |
         Retorna la informació d'un comentari
+      parameters:
+        - name: id
+          in: path
+          description: ID del comentari
+          required: true
+          type: integer
+          format: int64
       responses:
         200:
           description: Successful response
