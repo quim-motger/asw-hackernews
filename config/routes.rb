@@ -73,3 +73,13 @@ Rails.application.routes.draw do
   root 'contributions#newest'
   
 end
+
+ApiDemoApp::Application.routes.draw do
+  scope '/api' do
+    scope '/users' do
+      get '/user' => 'users#index'
+      patch '/user' => 'users#index'
+      
+    end
+  end  
+end
