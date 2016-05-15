@@ -2,6 +2,13 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
+use Rack::Cors do
+  allow do
+    origins '*'
+    resource '*', headers: :any, methods: :any
+  end
+end
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
