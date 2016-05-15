@@ -9,20 +9,37 @@ info:
   title: HackerNews
   
 securityDefinitions:
-  apiKey:
+  Token:
     type: apiKey
     description: Té la clau de usuari generada. Es pot extreure desde la interficie grafica de la aplicació
-    name: api_key
+    name: Authorization
     in: header
 produces:
   - application/json
-host: hackersnews.herokuapp.com
+host: localhost:3000
 # Describe your paths here
 paths:
+  /api/votes:
+      post:
+        security:
+          - Token: []
+        description: |
+          Creates new vote.
+        parameters:
+          -
+            name: contribution_id
+            in: formData
+            description: Contribution identifier
+            required: true
+            type: number
+        responses:
+          200:
+            description: Succesfully created
+            schema:
+              $ref: '#/definitions/Vote'
+
   /api/posts/ask:
     get:
-      security:
-        - apiKey: []
       description: |
         Retorna una llista de posts de tipus "Ask" ordenades cronològicament per data de publicació
       responses:
@@ -38,8 +55,6 @@ paths:
             $ref: '#/definitions/Error'
   /api/posts/url:
     get:
-      security:
-        - apiKey: []
       description: |
         Retorna una llista de posts de tipus "Url" ordenades cronològicament per data de publicació
       responses:
@@ -55,8 +70,6 @@ paths:
             $ref: '#/definitions/Error'
   /api/posts/{id}:
     get:
-      security:
-        - apiKey: []
       description: |
         Retorna la informació d'un post
       parameters:
@@ -77,8 +90,6 @@ paths:
             $ref: '#/definitions/Error'
   /api/comments/{id}:
     get:
-      security:
-        - apiKey: []
       description: |
         Retorna la informació d'un comentari
       parameters:
@@ -129,3 +140,20 @@ definitions:
           type: string
         fields:
           type: string
+  Vote:
+      type: object
+      properties:
+        contribution_id:
+          type: integer
+          format: int32
+        id:
+          type: integer
+          format: int32
+        user_id:
+          type: integer
+          format: int32
+        created_at:
+          type: string
+        updated_at:
+          type: string
+

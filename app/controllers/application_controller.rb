@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   def record_not_found
     render :file => "public/404.html", :status => 404
   end
-  
+
   def hello
     render text: "Hello world! Welcome to our app.\n We are going to have so much fun.\n\n SO\nMUCH"
   end
@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def authenticate
-    if user = authenticate_or_request_with_http_token { |token, options| print decode(token); User.find_by_email(decode(token)) }
+    if request.authorization and user = User.find_by_email(decode(request.authorization))
       @api_user = user
     else
       request_http_token_authentication
