@@ -116,18 +116,26 @@ class ContributionsController < ApplicationController
     end
   end
   
-  def api_newest
+  def api_url
     @contributions = Contribution.where(["contr_type = 'post' and contr_subtype='url'"]).all.order('CREATED_AT DESC');
-    format.json { render json: @contributions.all, status: :ok }
+    format.json { render json: @contributions, status: :ok }
   end
   
   def api_ask
+    @contributions = Contribution.where(["contr_type = 'post'  and contr_subtype = 'text'"]).all.order('CREATED_AT DESC');
+    format.json { render json: @contributions, status: :ok }
   end
   
   def api_comment
+    set_contribution
+    return status 404 if @contribution.nil? || (@contribution.contr_type != 'comment' && @contribution.contr_type != 'reply')
+    format.json { render json: @contribution, status: :ok }
   end
   
-  def api_discuss
+  def api_post
+    set_contribution
+    return status 404 if @contribution.nil? || @contribution.contr_type != 'post'
+    format.json { render json: @contribution, status: :ok }
   end
   
   private

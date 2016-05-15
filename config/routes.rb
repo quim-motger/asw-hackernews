@@ -14,9 +14,9 @@ Rails.application.routes.draw do
   get '/threads' => 'contributions#threads'
   patch '/user' => 'users#update'
   
-  get '/api/posts/url' => 'contributions#api_newest'
+  get '/api/posts/url' => 'contributions#api_url'
   get '/api/posts/ask' => 'contributions#api_ask'
-  get '/api/posts/:id' => 'contributions#api_discuss'
+  get '/api/posts/:id' => 'contributions#api_post'
   get '/api/comments/:id' => 'contributions#api_comment'
 
   
