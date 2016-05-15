@@ -13,6 +13,10 @@ Rails.application.routes.draw do
   get '/ask' => 'contributions#ask'
   get '/threads' => 'contributions#threads'
   patch '/user' => 'users#update'
+  
+  get '/api/posts/url' => 'contributions#newest'
+  get '/api/posts/ask' => 'contributions#ask'
+  get '/api/posts/:id' => 'contributions#discuss'
 
   
   # The priority is based upon order of creation: first created -> highest priority.

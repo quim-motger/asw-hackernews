@@ -102,6 +102,7 @@ class ContributionsController < ApplicationController
 
   def newest
     @contributions = Contribution.where(["contr_type = 'post' and contr_subtype='url'"]).all.order('CREATED_AT DESC');
+    respond_with @contribution
   end
 
   def ask
@@ -115,7 +116,7 @@ class ContributionsController < ApplicationController
       redirect_to signin_path("google");
     end
   end
-
+  
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_contribution
