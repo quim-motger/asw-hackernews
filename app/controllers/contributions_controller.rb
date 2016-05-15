@@ -131,7 +131,7 @@ class ContributionsController < ApplicationController
   
   def api_comment
     set_contribution
-    return status 404 if @contribution.nil? || (@contribution.contr_type != 'comment' && @contribution.contr_type != 'reply')
+    return status 404 if (@contribution.nil? || (@contribution.contr_type != 'comment' && @contribution.contr_type != 'reply'))
     render json: @contribution
   end
   
