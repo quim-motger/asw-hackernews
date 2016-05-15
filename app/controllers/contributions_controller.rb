@@ -1,6 +1,7 @@
 class ContributionsController < ApplicationController
   include SessionsHelper, ApplicationHelper
   before_action :set_contribution, only: [:show, :edit, :update, :destroy]
+  respond_to :json
 
 
   # GET /contributions
@@ -115,7 +116,33 @@ class ContributionsController < ApplicationController
       redirect_to signin_path("google");
     end
   end
-
+  
+  ##API calls
+  
+  def api_url
+    @contributions = Contribution.where(["contr_type = 'post' and contr_subtype='url'"]).all.order('CREATED_AT DESC');
+    render json: @contributions
+  end
+  
+  def api_ask
+    @contributions = Contribution.where(["contr_type = 'post'  and contr_subtype = 'text'"]).all.order('CREATED_AT DESC');
+    render json: @contributions
+  end
+  
+  def api_comment
+    set_contribution
+    return status 404 if (@contribution.nil? || (@contribution.contr_type != 'comment' && @contribution.contr_type != 'reply'))
+    render json: @contribution
+  end
+  
+  def api_post
+    set_contribution
+    return status 404 if @contribution.nil? || @contribution.contr_type != 'post'
+    render json: @contribution
+  end
+  
+  ##end API calls
+  
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_contribution
