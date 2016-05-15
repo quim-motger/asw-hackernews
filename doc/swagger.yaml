@@ -16,6 +16,7 @@ securityDefinitions:
     in: header
 produces:
   - application/json
+host: asw-hackernews-quim-motger-1.c9users.io
 # Describe your paths here
 paths:
   /api/posts/ask:
