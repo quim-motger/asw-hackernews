@@ -117,6 +117,8 @@ class ContributionsController < ApplicationController
     end
   end
   
+  ##API calls
+  
   def api_url
     @contributions = Contribution.where(["contr_type = 'post' and contr_subtype='url'"]).all.order('CREATED_AT DESC');
     respond_to do |format|
@@ -146,6 +148,8 @@ class ContributionsController < ApplicationController
       format.json { render json: @contribution.to_json }
     end
   end
+  
+  ##end API calls
   
   private
   # Use callbacks to share common setup or constraints between actions.
