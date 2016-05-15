@@ -30,7 +30,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Ask'
+              $ref: '#/definitions/Contribution'
         default:
           description: Unexpected error
           schema:
@@ -47,7 +47,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Url'
+              $ref: '#/definitions/Contribution'
         default:
           description: Unexpected error
           schema:
@@ -62,7 +62,7 @@ paths:
         200:
           description: Successful response
           schema:
-            $ref: '#/definitions/Post'
+            $ref: '#/definitions/Contribution'
         default:
           description: Unexpected error
           schema:
@@ -77,13 +77,13 @@ paths:
         200:
           description: Successful response
           schema:
-            $ref: '#/definitions/Comment'
+            $ref: '#/definitions/Contribution'
         default:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
 definitions:
-  Post:
+  Contribution:
     type: object
     properties:
       title:
@@ -96,49 +96,6 @@ definitions:
         type: integer
       url:
         type: string
-      upvote:
-        type: integer
-      created_at:
-        type: string
-      updated_at:
-        type: string
-  Ask:
-    type: object
-    properties:
-      title:
-        type: string
-      content:
-        type: string
-      user_id:
-        type: integer
-      upvote:
-        type: integer
-      created_at:
-        type: string
-      updated_at:
-        type: string
-  Url:
-    type: object
-    properties:
-      title:
-        type: string
-      user_id:
-        type: integer
-      url:
-        type: string
-      upvote:
-        type: integer
-      created_at:
-        type: string
-      updated_at:
-        type: string
-  Comment:
-    type: object
-    properties:
-      content:
-        type: string
-      user_id:
-        type: integer
       parent_id:
         type: integer
       upvote:
