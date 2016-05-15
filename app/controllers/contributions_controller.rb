@@ -1,6 +1,7 @@
 class ContributionsController < ApplicationController
   include SessionsHelper, ApplicationHelper
   before_action :set_contribution, only: [:show, :edit, :update, :destroy]
+  respond_to :json
 
 
   # GET /contributions
