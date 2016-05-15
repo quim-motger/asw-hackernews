@@ -119,14 +119,14 @@ class ContributionsController < ApplicationController
   def api_url
     respond_to do |format|
       @contributions = Contribution.where(["contr_type = 'post' and contr_subtype='url'"]).all.order('CREATED_AT DESC');
-      format.json { render json: @contributions, status: :ok }
+      format.json { render json: @contributions.to_json }
     end
   end
   
   def api_ask
     respond_to do |format|
       @contributions = Contribution.where(["contr_type = 'post'  and contr_subtype = 'text'"]).all.order('CREATED_AT DESC');
-      format.json { render json: @contributions, status: :ok }
+      format.json { render json: @contributions.to_json }
     end
   end
   
@@ -134,7 +134,7 @@ class ContributionsController < ApplicationController
     respond_to do |format|
       set_contribution
       return status 404 if @contribution.nil? || (@contribution.contr_type != 'comment' && @contribution.contr_type != 'reply')
-      format.json { render json: @contribution, status: :ok }
+      format.json { render json: @contribution.to_json }
     end
   end
   
@@ -142,7 +142,7 @@ class ContributionsController < ApplicationController
     respond_to do |format|
       set_contribution
       return status 404 if @contribution.nil? || @contribution.contr_type != 'post'
-      format.json { render json: @contribution, status: :ok }
+      format.json { render json: @contribution.to_json }
     end
   end
   
