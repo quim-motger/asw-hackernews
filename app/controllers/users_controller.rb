@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :check_login, only: [:edit, :update]
   before_action :set_karma, only: [:show, :edit]
+  before_action :authenticate, only: [:api_update]
   include ApplicationHelper
   include SessionsHelper
 
@@ -75,6 +76,29 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  ##API CALLS
+  def api_show
+    set_user
+    render json: @user
+  end
+  
+  def api_update
+    if params[:id].to_s != @api_user.id.to_s
+      render_unauthorized
+    else
+      @api_user.update(user_params)
+      render json: @api_user
+    end
+  end
+  
+  def api_threads
+    set_user
+    @contributions = (@user.contributions).where("contr_type = 'comment' or contr_type = 'reply'")
+    render json: @contributions
+  end
+
+  ##end API CALLS
 
   private
   # Use callbacks to share common setup or constraints between actions.
@@ -100,4 +124,7 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :email)
   end
+  
 end
+
+  

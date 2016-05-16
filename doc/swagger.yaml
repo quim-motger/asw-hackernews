@@ -42,42 +42,70 @@ paths:
               user_id:
                 type: integer
 
-
-
-  # This is a path endpoint. Change it.
-  /persons:
-    # This is a HTTP operation
+  /api/users/{id}:
     get:
-      # Describe this verb here. Note: you can use markdown
+      security:
+        - apiKey: []
       description: |
-        Gets `Person` objects.
-        Optional query param of **size** determines
-        size of returned array
-      # This is array of GET operation parameters:
+        Gets specific user.
       parameters:
-        # An example parameter that is in query and is required
         -
-          name: size
+          name: user_id
           in: query
-          description: Size of array
+          description: User identifier
           required: true
           type: number
-          format: double
-      # Expected responses for this operation:
       responses:
-        # Response code
         200:
-          description: Successful response
-          # A schema describing your response object.
-          # Use JSON Schema format
+          description: Succesfully get
           schema:
-            title: ArrayOfPersons
-            type: array
-            items:
-              title: Person
-              type: object
-              properties:
-                name:
-                  type: string
-                single:
-                  type: boolean
+             $ref: '#/definitions/User'
+            
+
+    put:
+      security:
+        - apiKey: []
+      description:
+        Edit user
+      parameters:
+        -
+          name: user_id
+          in: query
+          description: User identifier
+          required: true
+          type: number
+      responses:
+        200:
+          description: Succesfully update
+          schema: 
+            $ref: '#/definitions/User'
+                
+  /api/users/{id}/threads:  
+    get:
+      security:
+        - apiKey: []
+      description: |
+        Gets specific user.
+      parameters:
+        -
+          name: user_id
+          in: query
+          description: User identifier
+          required: true
+          type: number
+      responses:
+        200:
+          description: Succesfully get
+          schema:
+             $ref: '#/definitions/User'
+              
+definitions:
+  User:
+    type: object
+    properties:
+      username:
+        type: string
+      email:
+        type: string
+        
+                  
