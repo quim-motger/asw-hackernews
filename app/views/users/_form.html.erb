@@ -36,6 +36,11 @@
             <td valign="top"><%= f.label :email %></td>
             <td><%= @user.email %></td>
           </tr>
+          <tr>
+            <td valign="top"><%= f.label :auth_token %></td>
+            <td><%= @user.token() %></td>
+          </tr>
+
 
           <tr>
             <td><%= f.submit %></td>

@@ -15,9 +15,16 @@ Rails.application.routes.draw do
   patch '/user' => 'users#update'
 
   get 'api/users/:id' => 'users#api_show'
-  patch 'api/users/:id' => 'users#api_update'
-  end 
+  put 'api/users/:id' => 'users#api_update'
   
+  get '/api/posts/url' => 'contributions#api_url'
+  get '/api/posts/ask' => 'contributions#api_ask'
+  get '/api/posts/:id' => 'contributions#api_post'
+  get '/api/comments/:id' => 'contributions#api_comment'
+
+  post '/api/votes' => 'votes#create_api'
+  get '/api/votes/:id' => 'votes#show_api'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -77,4 +84,4 @@ Rails.application.routes.draw do
   
 end
  
-end
+

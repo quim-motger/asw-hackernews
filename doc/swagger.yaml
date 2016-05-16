@@ -12,7 +12,7 @@ securityDefinitions:
   apiKey:
     type: apiKey
     description: Té la clau de usuari generada. Es pot extreure desde la interficie grafica de la aplicació
-    name: api_key
+    name: Authorization
     in: header
 
 # Describe your paths here
