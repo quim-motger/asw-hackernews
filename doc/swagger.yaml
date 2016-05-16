@@ -51,17 +51,20 @@ paths:
       description: |
         Create a new post, question or link
       parameters:
-        - name: title
+        - 
+          name: title
           in: body
           description: title of the submission
           required: true
-          type: text
-        - name: url
+          type: string
+        - 
+          name: url
           in: body
           description: Url of the link (empty if question)
           required: false
-          type: url
-        - name: text
+          type: string
+        - 
+          name: text
           in: body
           description: Text of the question (empty if link)
           required: false (ccant be false both)
@@ -99,8 +102,8 @@ paths:
           description: Contribution identifier
           required: true
           type: number
-      
-          responses:
+        
+      responses:
         200:
           description: Succesfully created
           schema:
@@ -132,8 +135,7 @@ paths:
           description: body of the comment
           required: true
           type: text
-      
-          responses:
+      responses:
         200:
           description: Succesfully created
           schema:
