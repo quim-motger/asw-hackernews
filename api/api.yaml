@@ -173,15 +173,11 @@ paths:
 
         responses:
           200:
-            description: Successfully created
+            description: Successful response
             schema:
-              $ref: '#/definitions/Error'
-          403:
-            description: Unauthorized
-            schema:
-              $ref: '#/definitions/Error'
+              $ref: '#/definitions/Contribution'
           default:
-            description: unexpected error
+            description: Unexpected error
             schema:
               $ref: '#/definitions/Error'
 
@@ -198,15 +194,38 @@ paths:
 
         responses:
           200:
-            description: Successfully created
+            description: Successful response
             schema:
-              $ref: '#/definitions/Error'
-          403:
-            description: Unauthorized
-            schema:
-              $ref: '#/definitions/Error'
+              $ref: '#/definitions/Contribution'
           default:
-            description: unexpected error
+            description: Unexpected error
+            schema:
+              $ref: '#/definitions/Error'
+              
+                /api/replies:
+    post:
+      security:
+          - apiKey: []
+      description: |
+        Create a new reply of a comment
+      parameters:
+        - name: contribution_id
+          in: formData
+          description: Contribution identifier
+          required: true
+          type: number
+        - name: reply
+          in: body
+          description: body of the comment
+          required: true
+          type: text
+      responses:
+          200:
+            description: Successful response
+            schema:
+              $ref: '#/definitions/Contribution'
+          default:
+            description: Unexpected error
             schema:
               $ref: '#/definitions/Error'
 
