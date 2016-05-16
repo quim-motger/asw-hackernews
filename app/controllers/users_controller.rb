@@ -100,4 +100,21 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :email)
   end
+  
 end
+
+  def api_show
+    @user = User.where(["user_id = current_user.id"]);
+    render json: @user
+  end
+  
+  def api_update
+    @user.update(user_params)
+    render json: @user
+  end
+  
+  def api_threads
+    @user = User.where(["user_id = current_user.id"]);
+    @contributions = user.contributions
+    render json: @contributions
+  end

@@ -80,8 +80,25 @@ paths:
           schema: 
             $ref: '#/definitions/User'
                 
-                
-                
+  /api/users/{id}/threads:  
+    get:
+      security:
+        - apiKey: []
+      description: |
+        Gets specific user.
+      parameters:
+        -
+          name: user_id
+          in: query
+          description: User identifier
+          required: true
+          type: number
+      responses:
+        200:
+          description: Succesfully get
+          schema:
+             $ref: '#/definitions/User'
+              
 definitions:
   User:
     type: object
