@@ -16,24 +16,24 @@ securityDefinitions:
     in: header
 produces:
   - application/json
-host: hackersnews.herokuapp.com
+host: localhost:3000
 # Describe your paths here
 paths:
   /api/replies/{id}:
       get:
         description:
-          Obtains replies by id
+          Retorna la informació d'una replica.
         parameters:
           -
             name: id
             in: path
-            description: ID del reply
+            description: Identificador de la replica
             required: true
             type: integer
             format: int64
         responses:
           200:
-            description: Existing reply
+            description: La replica ja existeix
             schema:
               $ref: '#/definitions/Contribution'
           404:
@@ -49,12 +49,12 @@ paths:
         security:
           - Token: []
         description: |
-          Creates new vote.
+          Crea un nou vot
         parameters:
           -
             name: contribution_id
             in: formData
-            description: Contribution identifier
+            description: identificador de la contribució a votar
             required: true
             type: number
         responses:
@@ -63,7 +63,7 @@ paths:
             schema:
               $ref: '#/definitions/Vote'
           400:
-            description: User already voted
+            description: L'usuari ja ha votat
             schema:
               type: object
               properties:
@@ -72,9 +72,12 @@ paths:
                   items:
                     type: string
           403:
-            description: Non authorized
+            description: No autoritzat
             schema:
-              type: string
+              type: object
+              properties:
+                error:
+                  type: string
 
 
   /api/posts/ask:
@@ -151,21 +154,24 @@ paths:
   /api/posts:
       post:
         security:
-          - Token: []
-        description:
+            - Token: []
+        description: |
           Create a new post, question or link
         parameters:
-          - name: title
+          -
+            name: title
             in: formData
             description: title of the submission
             required: true
             type: string
-          - name: url
+          -
+            name: url
             in: formData
             description: Url of the link (empty if question)
             required: false
             type: string
-          - name: text
+          -
+            name: text
             in: formData
             description: Text of the question (empty if link)
             required: false
@@ -173,17 +179,16 @@ paths:
 
         responses:
           200:
-            description: Successful response
+            description: Succesfully created
             schema:
               $ref: '#/definitions/Contribution'
-          default:
-            description: Unexpected error
-            schema:
-              $ref: '#/definitions/Error'
+
 
   /api/comments:
       post:
-        description:
+        security:
+            - Token: []
+        description: |
           Create a new comment of a post
         parameters:
           - name: comment
@@ -191,44 +196,43 @@ paths:
             description: body of the comment
             required: true
             type: string
+          -
+            name: parent_id
+            in: formData
+            description: Identificador de la contribució sobre la que comentem
+            required: true
+            type: number
 
         responses:
           200:
-            description: Successful response
+            description: Succesfully created
             schema:
               $ref: '#/definitions/Contribution'
-          default:
-            description: Unexpected error
-            schema:
-              $ref: '#/definitions/Error'
-              
-                /api/replies:
-    post:
-      security:
-          - apiKey: []
-      description: |
-        Create a new reply of a comment
-      parameters:
-        - name: contribution_id
-          in: formData
-          description: Contribution identifier
-          required: true
-          type: number
-        - name: reply
-          in: body
-          description: body of the comment
-          required: true
-          type: text
-      responses:
-          200:
-            description: Successful response
-            schema:
-              $ref: '#/definitions/Contribution'
-          default:
-            description: Unexpected error
-            schema:
-              $ref: '#/definitions/Error'
 
+  /api/replies:
+      post:
+        security:
+            - Token: []
+        description:
+          Create a new reply of a comment
+        parameters:
+          -
+            name: parent_id
+            in: formData
+            description: Identificador del comentari sobre el que fem una replica
+            required: true
+            type: number
+
+          - name: reply
+            in: formData
+            description: Contigut de la replica
+            required: true
+            type: string
+        responses:
+          200:
+            description: Succesfully created
+            schema:
+              $ref: '#/definitions/Contribution'
 
 definitions:
   Contribution:

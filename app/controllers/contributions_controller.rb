@@ -1,6 +1,7 @@
 class ContributionsController < ApplicationController
   include SessionsHelper, ApplicationHelper
   before_action :set_contribution, only: [:show, :edit, :update, :destroy, :api_get_reply]
+  before_action :authenticate, only: [:create_comment_api, :create_posts_api, :create_reply_api]
 
 
   # GET /contributions
@@ -152,8 +153,9 @@ class ContributionsController < ApplicationController
     @contribution = Contribution.new({content: params['reply']})
     @contribution.user_id = @api_user.id
     @contribution.contr_type= 'reply'
+    @contribution.parent_id = params[:parent_id]
     if @contribution.save
-      render :show_api_reply, id: @contribution.id
+      render json: @contribution, id: @contribution.id
     else
       render json: @contribution.errors, status: :bad_request
     end
@@ -163,7 +165,7 @@ class ContributionsController < ApplicationController
     @contribution = Contribution.new({title: params['title']})
     @contribution.user_id = @api_user.id
     @contribution.contr_type= 'post'
-    @contribution.title = title
+    @contribution.title = params[:title]
     
     if params['url'].blank? 
       @contribution.contr_subtype ='text'
@@ -172,11 +174,11 @@ class ContributionsController < ApplicationController
       @contribution.contr_subtype = 'url'
       @contribution.url = params['url']
     end
-    if ((params['url'].blank? && params['text'].blank?) || ((not params['url'].blank?) && (not params['text'].blank?)))
+    if (params['url'].blank? && params['text'].blank?) || ((not params['url'].blank?) && (not params['text'].blank?))
        render json: @contribution.errors, status: :bad_request
     end
     if @contribution.save
-      render :show_api_post, id: @contribution.id
+      render json: @contribution, id: @contribution.id
     else
       render json: @contribution.errors, status: :bad_request
     end
@@ -186,8 +188,9 @@ class ContributionsController < ApplicationController
     @contribution = Contribution.new({content: params['comment']})
     @contribution.user_id = @api_user.id
     @contribution.contr_type= 'comment'
+    @contribution.parent_id = params[:parent_id]
     if @contribution.save
-      render :show_api_comment, id: @contribution.id
+      render json: @contribution, status: :ok
     else
       render json: @contribution.errors, status: :bad_request
     end
