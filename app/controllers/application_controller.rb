@@ -22,8 +22,12 @@ class ApplicationController < ActionController::Base
     if request.authorization and user = User.find_by_email(decode(request.authorization))
       @api_user = user
     else
-      request_http_token_authentication
+      render_unauthorized
     end
+  end
+
+  def render_unauthorized
+    render json: {:error => 'Unathorized'}.to_json, :status => 401
   end
 
 end

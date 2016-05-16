@@ -16,7 +16,7 @@ securityDefinitions:
     in: header
 produces:
   - application/json
-host: localhost:3000
+host: hackersnews.herokuapp.com
 # Describe your paths here
 paths:
   /api/replies/{id}:

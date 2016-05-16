@@ -84,8 +84,12 @@ class UsersController < ApplicationController
   end
   
   def api_update
-    @api_user.update(user_params)
-    render json: @api_user
+    if params[:id].to_s != @api_user.id.to_s
+      render_unauthorized
+    else
+      @api_user.update(user_params)
+      render json: @api_user
+    end
   end
   
   def api_threads
