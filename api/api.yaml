@@ -22,20 +22,20 @@ paths:
   /api/replies/{id}:
       get:
         description:
-          Obtains replies by id
+          Retorna la informació d'una replica.
         parameters:
           -
             name: id
             in: path
-            description: ID del reply
+            description: Identificador de la replica
             required: true
             type: integer
             format: int64
         responses:
           200:
-            description: Existing reply
+            description: La replica ja existeix
             schema:
-              $ref: '#/definitions/Contribution'
+              $ref: '#/definitions/Reply'
           404:
             description: Not found
             schema:
@@ -49,12 +49,12 @@ paths:
         security:
           - Token: []
         description: |
-          Creates new vote.
+          Crea un nou vot
         parameters:
           -
             name: contribution_id
             in: formData
-            description: Contribution identifier
+            description: identificador de la contribució a votar
             required: true
             type: number
         responses:
@@ -63,7 +63,7 @@ paths:
             schema:
               $ref: '#/definitions/Vote'
           400:
-            description: User already voted
+            description: L'usuari ja ha votat
             schema:
               type: object
               properties:
@@ -72,81 +72,167 @@ paths:
                   items:
                     type: string
           403:
-            description: Non authorized
+            description: No autoritzat
             schema:
-              type: string
+              type: object
+              properties:
+                error:
+                  type: string
 
 
   /api/posts/ask:
-    get:
-      description: |
-        Retorna una llista de posts de tipus "Ask" ordenades cronològicament per data de publicació
-      responses:
-        200:
-          description: Successful response
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Contribution'
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
+      get:
+        description:
+          Retorna una llista de posts de tipus "Ask" ordenades cronològicament per data de publicació
+        responses:
+          200:
+            description: Successful response
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/Contribution'
+          default:
+            description: Unexpected error
+            schema:
+              $ref: '#/definitions/Error'
   /api/posts/url:
-    get:
-      description: |
-        Retorna una llista de posts de tipus "Url" ordenades cronològicament per data de publicació
-      responses:
-        200:
-          description: Successful response
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Contribution'
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
+      get:
+        description:
+          Retorna una llista de posts de tipus "Url" ordenades cronològicament per data de publicació
+        responses:
+          200:
+            description: Successful response
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/Contribution'
+          default:
+            description: Unexpected error
+            schema:
+              $ref: '#/definitions/Error'
   /api/posts/{id}:
-    get:
-      description: |
-        Retorna la informació d'un post
-      parameters:
-        - name: id
-          in: path
-          description: ID del post (ask o url)
-          required: true
-          type: integer
-          format: int64
-      responses:
-        200:
-          description: Successful response
-          schema:
-            $ref: '#/definitions/Contribution'
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
+      get:
+        description:
+          Retorna la informació d'un post
+        parameters:
+          - name: id
+            in: path
+            description: ID del post (ask o url)
+            required: true
+            type: integer
+            format: int64
+        responses:
+          200:
+            description: Successful response
+            schema:
+              $ref: '#/definitions/Contribution'
+          default:
+            description: Unexpected error
+            schema:
+              $ref: '#/definitions/Error'
+
   /api/comments/{id}:
-    get:
-      description: |
-        Retorna la informació d'un comentari
-      parameters:
-        - name: id
-          in: path
-          description: ID del comentari
-          required: true
-          type: integer
-          format: int64
-      responses:
-        200:
-          description: Successful response
-          schema:
-            $ref: '#/definitions/Contribution'
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
+      get:
+        description:
+          Retorna la informació d'un comentari
+        parameters:
+          - name: id
+            in: path
+            description: ID del comentari
+            required: true
+            type: integer
+        responses:
+          200:
+            description: Successful response
+            schema:
+              $ref: '#/definitions/Comment'
+          default:
+            description: Unexpected error
+            schema:
+              $ref: '#/definitions/Error'
+
+  /api/posts:
+      post:
+        security:
+            - Token: []
+        description: |
+          Create a new post, question or link
+        parameters:
+          -
+            name: title
+            in: formData
+            description: title of the submission
+            required: true
+            type: string
+          -
+            name: url
+            in: formData
+            description: Url of the link (empty if question)
+            required: false
+            type: string
+          -
+            name: text
+            in: formData
+            description: Text of the question (empty if link)
+            required: false
+            type: string
+
+        responses:
+          200:
+            description: Succesfully created
+            schema:
+              $ref: '#/definitions/Contribution'
+
+
+  /api/comments:
+      post:
+        security:
+            - Token: []
+        description: |
+          Create a new comment of a post
+        parameters:
+          - name: comment
+            in: formData
+            description: body of the comment
+            required: true
+            type: string
+          -
+            name: parent_id
+            in: formData
+            description: Identificador de la contribució sobre la que comentem
+            required: true
+            type: number
+
+        responses:
+          200:
+            description: Succesfully created
+            schema:
+              $ref: '#/definitions/Comment'
+
+  /api/replies:
+      post:
+        security:
+            - Token: []
+        description:
+          Create a new reply of a comment
+        parameters:
+          -
+            name: parent_id
+            in: formData
+            description: Identificador del comentari sobre el que fem una replica
+            required: true
+            type: number
+
+          - name: reply
+            in: formData
+            description: Contigut de la replica
+            required: true
+            type: string
+        responses:
+          200:
+            description: Succesfully created
+            schema:
+              $ref: '#/definitions/Reply'
 
   /api/users/{id}:
     get:
@@ -217,10 +303,60 @@ paths:
         200:
           description: Succesfully get
           schema:
-             $ref: '#/definitions/Contribution'
+            type: array
+            items:
+               $ref: '#/definitions/Contribution'
+
+
+
 
 definitions:
+
   Contribution:
+    type: object
+    properties:
+      title:
+        type: string
+      contr_subtype:
+        type: string
+      content:
+        type: string
+      user_id:
+        type: integer
+      url:
+        type: string
+      parent_id:
+        type: integer
+      upvote:
+        type: integer
+      created_at:
+        type: string
+      updated_at:
+        type: string
+
+  Comment:
+    type: object
+    properties:
+      title:
+        type: string
+      contr_subtype:
+        type: string
+      content:
+        type: string
+      user_id:
+        type: integer
+      url:
+        type: string
+      parent_id:
+        type: integer
+      upvote:
+        type: integer
+      created_at:
+        type: string
+      updated_at:
+        type: string
+
+  Reply:
     type: object
     properties:
       title:

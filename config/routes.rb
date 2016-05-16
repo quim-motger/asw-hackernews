@@ -27,6 +27,10 @@ Rails.application.routes.draw do
   get '/api/votes/:id' => 'votes#show_api'
   get '/api/replies/:id' => 'contributions#api_get_reply'
 
+  post '/api/replies' => 'contributions#create_reply_api'
+  post '/api/posts' => 'contributions#create_posts_api'
+  post '/api/comments' => 'contributions#create_comment_api'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
