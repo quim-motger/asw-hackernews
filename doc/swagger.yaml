@@ -42,181 +42,70 @@ paths:
               user_id:
                 type: integer
 
-
-
-  /api/posts:
-    post:
+  /api/users/{id}:
+    get:
       security:
-          - apiKey: []
+        - apiKey: []
       description: |
-        Create a new post, question or link
+        Gets specific user.
       parameters:
         -
-          name: title
-          in: body
-          description: title of the submission
-          required: true
-          type: string
-        -
-          name: url
-          in: body
-          description: Url of the link (empty if question)
-          required: false
-          type: string
-        -
-          name: text
-          in: body
-          description: Text of the question (empty if link)
-          required: false (ccant be false both)
-          type: text
-
-      responses:
-        200:
-          description: Succesfully created
-          schema:
-            title: posts
-            type: object
-            properties:
-              contribution_id:
-                type: integer
-              user_id:
-                type: integer
-
-
-
-  /api/comments:
-    post:
-      security:
-          - apiKey: []
-      description: |
-        Create a new comment of a post
-      parameters:
-        - name: comment
-          in: body
-          description: body of the comment
-          required: true
-          type: text
-        -
-          name: contribution_id
-          in: formData
-          description: Contribution identifier
+          name: user_id
+          in: query
+          description: User identifier
           required: true
           type: number
-
       responses:
         200:
-          description: Succesfully created
+          description: Succesfully get
           schema:
-            title: ArrayOfPersons
-            type: array
-            items:
-              title: Person
-              type: object
-              properties:
-                name:
-                  type: string
-                single:
-                  type: boolean
+             $ref: '#/definitions/User'
+            
 
-  /api/posts:
-    post:
+    put:
       security:
-          - apiKey: []
-      description: |
-        Create a new post, question or link
+        - apiKey: []
+      description:
+        Edit user
       parameters:
-        - 
-          name: title
-          in: body
-          description: title of the submission
-          required: true
-          type: string
-        - 
-          name: url
-          in: body
-          description: Url of the link (empty if question)
-          required: false
-          type: string
-        - 
-          name: text
-          in: body
-          description: Text of the question (empty if link)
-          required: false (ccant be false both)
-          type: text
-      
-      responses:
-        200:
-          description: Succesfully created
-          schema:
-            title: posts
-            type: object
-            properties:
-              contribution_id:
-                type: integer
-              user_id:
-                type: integer
-          
-          
-          
-  /api/comments:
-    post:
-      security:
-          - apiKey: []
-      description: |
-        Create a new comment of a post
-      parameters:
-        - name: comment
-          in: body
-          description: body of the comment
-          required: true
-          type: text
         -
-          name: contribution_id
-          in: formData
-          description: Contribution identifier
+          name: user_id
+          in: query
+          description: User identifier
           required: true
           type: number
+      responses:
+        200:
+          description: Succesfully update
+          schema: 
+            $ref: '#/definitions/User'
+                
+  /api/users/{id}/threads:  
+    get:
+      security:
+        - apiKey: []
+      description: |
+        Gets specific user.
+      parameters:
+        -
+          name: user_id
+          in: query
+          description: User identifier
+          required: true
+          type: number
+      responses:
+        200:
+          description: Succesfully get
+          schema:
+             $ref: '#/definitions/User'
+              
+definitions:
+  User:
+    type: object
+    properties:
+      username:
+        type: string
+      email:
+        type: string
         
-      responses:
-        200:
-          description: Succesfully created
-          schema:
-            title: comments
-            type: object
-            properties:
-              contribution_id:
-                type: integer
-              user_id:
-                type: integer
-                
-                
-          
-          
-  /api/replies:
-    post:
-      security:
-          - apiKey: []
-      description: |
-        Create a new reply of a comment
-      parameters:
-        - name: contribution_id
-          in: formData
-          description: Contribution identifier
-          required: true
-          type: number
-        - name: reply
-          in: body
-          description: body of the comment
-          required: true
-          type: text
-      responses:
-        200:
-          description: Succesfully created
-          schema:
-            title: replies
-            type: object
-            properties:
-              contribution_id:
-                type: integer
-              user_id:
-                type: integer  
+                  

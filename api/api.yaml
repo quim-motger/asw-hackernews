@@ -234,6 +234,78 @@ paths:
             schema:
               $ref: '#/definitions/Reply'
 
+/api/users/{id}:
+    get:
+      description: |
+        Gets specific user.
+      parameters:
+        -
+          name: id
+          in: path
+          description: User identifier
+          required: true
+          type: number
+      responses:
+        200:
+          description: Succesfully get
+          schema:
+             $ref: '#/definitions/User'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+    put:
+      security:
+        - Token: []
+      description:
+        Edit user
+      parameters:
+        -
+          name: id
+          in: path
+          description: User identifier
+          required: true
+          type: number
+        -
+          name: name
+          in: formData
+          description: User name
+          required: false
+          type: string
+      responses:
+        200:
+          description: Succesfully update
+          schema:
+            $ref: '#/definitions/User'
+        401:
+          description: Unathorized user
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+
+  /api/users/{id}/threads:
+    get:
+      security:
+        - Token: []
+      description: |
+        Gets specific user.
+      parameters:
+        -
+          name: id
+          in: path
+          description: User identifier
+          required: true
+          type: number
+      responses:
+        200:
+          description: Succesfully get
+          schema:
+             $ref: '#/definitions/Contribution'
+
+
 definitions:
   Post:
     type: object
@@ -322,6 +394,20 @@ definitions:
         user_id:
           type: integer
           format: int32
+        created_at:
+          type: string
+        updated_at:
+          type: string
+  User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        email:
+          type: string
         created_at:
           type: string
         updated_at:
