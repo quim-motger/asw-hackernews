@@ -89,7 +89,8 @@ class UsersController < ApplicationController
   
   def api_threads
     set_user
-    @contributions = @user.contributions.where(contr_type = 'comment' or contr_type = 'reply').all.order('CREATED_AT DESC')
+    @contributions = @user.contributions
+    @contributions = @contributions.where(contr_type = 'comment' or contr_type = 'reply').all.order('CREATED_AT DESC')
     render json: @contributions
   end
 
