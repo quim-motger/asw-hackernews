@@ -106,8 +106,8 @@ paths:
         Gets specific user.
       parameters:
         -
-          name: user_id
-          in: query
+          name: id
+          in: path
           description: User identifier
           required: true
           type: number
@@ -116,7 +116,10 @@ paths:
           description: Succesfully get
           schema:
              $ref: '#/definitions/User'
-            
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'    
 
     put:
       security:
@@ -125,8 +128,8 @@ paths:
         Edit user
       parameters:
         -
-          name: user_id
-          in: query
+          name: id
+          in: path
           description: User identifier
           required: true
           type: number
@@ -144,8 +147,8 @@ paths:
         Gets specific user.
       parameters:
         -
-          name: user_id
-          in: query
+          name: id
+          in: path
           description: User identifier
           required: true
           type: number
@@ -153,7 +156,7 @@ paths:
         200:
           description: Succesfully get
           schema:
-             $ref: '#/definitions/User'
+             $ref: '#/definitions/Contribution'
               
 definitions:
   Contribution:
@@ -187,7 +190,6 @@ definitions:
           type: string
         fields:
           type: string
-          
   User:
     type: object
     properties:
