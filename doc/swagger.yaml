@@ -43,121 +43,104 @@ paths:
                 type: integer
 
 
-
-  # This is a path endpoint. Change it.
-  /persons:
-    # This is a HTTP operation
-    get:
-      # Describe this verb here. Note: you can use markdown
-      description: |
-        Gets `Person` objects.
-        Optional query param of **size** determines
-        size of returned array
-      # This is array of GET operation parameters:
-      parameters:
-        # An example parameter that is in query and is required
-        -
-          name: size
-          in: query
-          description: Size of array
-          required: true
-          type: number
-          format: double
-      # Expected responses for this operation:
-      responses:
-        # Response code
-        200:
-          description: Successful response
-          # A schema describing your response object.
-          # Use JSON Schema format
-          schema:
-            title: ArrayOfPersons
-            type: array
-            items:
-              title: Person
-              type: object
-              properties:
-                name:
-                  type: string
-                single:
-                  type: boolean
                   
   /api/posts:
     post:
+      security:
+          - apiKey: []
       description: |
         Create a new post, question or link
       parameters:
-        - name: token
-          in: header
-          description: Autentificator token
-          required: true
-          type: String
-          format: ???
         - name: title
           in: body
           description: title of the submission
           required: true
           type: text
-          format: ???
         - name: url
           in: body
           description: Url of the link (empty if question)
           required: false
           type: url
-          format: ???
         - name: text
           in: body
           description: Text of the question (empty if link)
           required: false (ccant be false both)
           type: text
-          format: ???
       
       responses:
         200:
-          description: Successfully created
+          description: Succesfully created
           schema:
-            $ref: '#/definitions/Succes'
-        403:
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error403'
-        default:
-          description: unexpected error
-          schema:
-            $ref: '#/definitions/Error'
+            title: posts
+            type: object
+            properties:
+              contribution_id:
+                type: integer
+              user_id:
+                type: integer
           
           
           
-          /api/comments:
+  /api/comments:
     post:
+      security:
+          - apiKey: []
       description: |
         Create a new comment of a post
       parameters:
-        - name: token
-          in: header
-          description: Autentificator token
-          required: true
-          type: String
-          format: ???
         - name: comment
           in: body
           description: body of the comment
           required: true
           type: text
-          format: ???
+        -
+          name: contribution_id
+          in: formData
+          description: Contribution identifier
+          required: true
+          type: number
       
-      responses:
+          responses:
         200:
-          description: Successfully created
+          description: Succesfully created
           schema:
-            $ref: '#/definitions/Succes'
-        403:
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error403'
-        default:
-          description: unexpected error
-          schema:
-            $ref: '#/definitions/Error'
+            title: comments
+            type: object
+            properties:
+              contribution_id:
+                type: integer
+              user_id:
+                type: integer
+                
+                
           
           
+  /api/replies:
+    post:
+      security:
+          - apiKey: []
+      description: |
+        Create a new reply of a comment
+      parameters:
+        - name: contribution_id
+          in: formData
+          description: Contribution identifier
+          required: true
+          type: number
+        - name: reply
+          in: body
+          description: body of the comment
+          required: true
+          type: text
+      
+          responses:
+        200:
+          description: Succesfully created
+          schema:
+            title: replies
+            type: object
+            properties:
+              contribution_id:
+                type: integer
+              user_id:
+                type: integer       
