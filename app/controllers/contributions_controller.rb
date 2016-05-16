@@ -131,14 +131,21 @@ class ContributionsController < ApplicationController
   
   def api_comment
     set_contribution
-    return status 404 if (@contribution.nil? || (@contribution.contr_type != 'comment' && @contribution.contr_type != 'reply'))
-    render json: @contribution
+
+    if @contribution.nil? || @contribution.contr_type != 'comment'
+      render :json => {:error => "not-found"}.to_json, :status => 404
+    else
+      render json: {:contribution => @contribution, :replies => @contribution.replies}.to_json, status: :ok
+    end
   end
   
   def api_post
     set_contribution
-    return status 404 if @contribution.nil? || @contribution.contr_type != 'post'
-    render json: @contribution
+    if @contribution.nil? || @contribution.contr_type != 'post'
+      render :json => {:error => "not-found"}.to_json, :status => 404
+    else
+      render json: {:contribution => @contribution, :comments => @contribution.replies}.to_json, status: :ok
+    end
   end
 
   def api_get_reply

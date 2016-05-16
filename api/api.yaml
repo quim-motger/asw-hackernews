@@ -16,33 +16,10 @@ securityDefinitions:
     in: header
 produces:
   - application/json
-host: hackersnews.herokuapp.com
+host: hackersnews.heroku.com
 # Describe your paths here
 paths:
-  /api/replies/{id}:
-      get:
-        description:
-          Retorna la informació d'una replica.
-        parameters:
-          -
-            name: id
-            in: path
-            description: Identificador de la replica
-            required: true
-            type: integer
-            format: int64
-        responses:
-          200:
-            description: La replica ja existeix
-            schema:
-              $ref: '#/definitions/Reply'
-          404:
-            description: Not found
-            schema:
-              type: object
-              properties:
-                error:
-                  type: string
+
 
   /api/votes:
       post:
@@ -95,6 +72,7 @@ paths:
             description: Unexpected error
             schema:
               $ref: '#/definitions/Error'
+
   /api/posts/url:
       get:
         description:
@@ -110,6 +88,7 @@ paths:
             description: Unexpected error
             schema:
               $ref: '#/definitions/Error'
+
   /api/posts/{id}:
       get:
         description:
@@ -125,27 +104,7 @@ paths:
           200:
             description: Successful response
             schema:
-              $ref: '#/definitions/Contribution'
-          default:
-            description: Unexpected error
-            schema:
-              $ref: '#/definitions/Error'
-
-  /api/comments/{id}:
-      get:
-        description:
-          Retorna la informació d'un comentari
-        parameters:
-          - name: id
-            in: path
-            description: ID del comentari
-            required: true
-            type: integer
-        responses:
-          200:
-            description: Successful response
-            schema:
-              $ref: '#/definitions/Comment'
+              $ref: '#/definitions/Post'
           default:
             description: Unexpected error
             schema:
@@ -183,6 +142,27 @@ paths:
             schema:
               $ref: '#/definitions/Contribution'
 
+  /api/comments/{id}:
+      get:
+        description:
+          Retorna la informació d'un comentari
+        parameters:
+          - name: id
+            in: path
+            description: ID del comentari
+            required: true
+            type: integer
+        responses:
+          200:
+            description: Successful response
+            schema:
+              $ref: '#/definitions/Comment'
+          default:
+            description: Unexpected error
+            schema:
+              $ref: '#/definitions/Error'
+
+
 
   /api/comments:
       post:
@@ -208,6 +188,30 @@ paths:
             description: Succesfully created
             schema:
               $ref: '#/definitions/Comment'
+  /api/replies/{id}:
+      get:
+        description:
+          Retorna la informació d'una replica.
+        parameters:
+          -
+            name: id
+            in: path
+            description: Identificador de la replica
+            required: true
+            type: integer
+            format: int64
+        responses:
+          200:
+            description: La replica ja existeix
+            schema:
+              $ref: '#/definitions/Contribution'
+          404:
+            description: No trobat
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
 
   /api/replies:
       post:
@@ -232,7 +236,8 @@ paths:
           200:
             description: Succesfully created
             schema:
-              $ref: '#/definitions/Reply'
+              $ref: '#/definitions/Contribution'
+
 
   /api/users/{id}:
     get:
@@ -334,49 +339,27 @@ definitions:
       updated_at:
         type: string
 
+  Post:
+    type: object
+    properties:
+      contribution:
+        $ref: '#/definitions/Contribution'
+      comments:
+        type: array
+        items:
+          $ref: '#/definitions/Contribution'
+
+
   Comment:
     type: object
     properties:
-      title:
-        type: string
-      contr_subtype:
-        type: string
-      content:
-        type: string
-      user_id:
-        type: integer
-      url:
-        type: string
-      parent_id:
-        type: integer
-      upvote:
-        type: integer
-      created_at:
-        type: string
-      updated_at:
-        type: string
+      contribution:
+        $ref: '#/definitions/Contribution'
+      replies:
+        type: array
+        items:
+          $ref: '#/definitions/Contribution'
 
-  Reply:
-    type: object
-    properties:
-      title:
-        type: string
-      contr_subtype:
-        type: string
-      content:
-        type: string
-      user_id:
-        type: integer
-      url:
-        type: string
-      parent_id:
-        type: integer
-      upvote:
-        type: integer
-      created_at:
-        type: string
-      updated_at:
-        type: string
   Error:
       type: object
       properties:
