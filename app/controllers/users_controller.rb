@@ -75,6 +75,25 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  ##API CALLS
+  def api_show
+    set_user
+    render json: @user
+  end
+  
+  def api_update
+    @user.update(user_params)
+    render json: @user
+  end
+  
+  def api_threads
+    set_user
+    @contributions = @user.contributions
+    render json: @contributions
+  end
+
+  ##end API CALLS
 
   private
   # Use callbacks to share common setup or constraints between actions.
@@ -103,18 +122,4 @@ class UsersController < ApplicationController
   
 end
 
-  def api_show
-    @user = User.where(["user_id = current_user.id"]);
-    render json: @user
-  end
   
-  def api_update
-    @user.update(user_params)
-    render json: @user
-  end
-  
-  def api_threads
-    @user = User.where(["user_id = current_user.id"]);
-    @contributions = user.contributions
-    render json: @contributions
-  end
