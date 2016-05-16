@@ -89,7 +89,7 @@ class UsersController < ApplicationController
   
   def api_threads
     set_user
-    @contributions = @user.contributions
+    @contributions = (@user.contributions).where("contr_type = 'comment' or contr_type = 'reply'")
     render json: @contributions
   end
 
