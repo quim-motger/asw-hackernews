@@ -84,7 +84,7 @@ class UsersController < ApplicationController
   
   def api_update
     @user = User.find_by_email(decode(request.authorization))
-    @user.update(params[:name])
+    @user.update(user_params)
     render json: @user
   end
   
