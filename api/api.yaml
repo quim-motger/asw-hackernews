@@ -16,7 +16,7 @@ securityDefinitions:
     in: header
 produces:
   - application/json
-host: hackersnews.herokuapp.com
+host: localhost:3000
 # Describe your paths here
 paths:
   /api/replies/{id}:
@@ -150,8 +150,6 @@ paths:
 
   /api/users/{id}:
     get:
-      security:
-        - apiKey: []
       description: |
         Gets specific user.
       parameters:
@@ -173,7 +171,7 @@ paths:
 
     put:
       security:
-        - apiKey: []
+        - Token: []
       description:
         Edit user
       parameters:
@@ -183,6 +181,12 @@ paths:
           description: User identifier
           required: true
           type: number
+        -
+          name: name
+          in: formData
+          description: User name
+          required: false
+          type: string
       responses:
         200:
           description: Succesfully update
@@ -192,7 +196,7 @@ paths:
   /api/users/{id}/threads:
     get:
       security:
-        - apiKey: []
+        - Token: []
       description: |
         Gets specific user.
       parameters:
@@ -256,11 +260,18 @@ definitions:
           type: string
         updated_at:
           type: string
-      User:
-        type: object
-        properties:
-          username:
-            type: string
-          email:
-            type: string
+  User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        email:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
 

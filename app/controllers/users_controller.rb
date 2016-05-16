@@ -3,7 +3,6 @@ class UsersController < ApplicationController
   before_action :check_login, only: [:edit, :update]
   before_action :set_karma, only: [:show, :edit]
   before_action :authenticate, only: [:api_update]
-  ]
   include ApplicationHelper
   include SessionsHelper
 

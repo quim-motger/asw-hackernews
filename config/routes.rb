@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   patch '/user' => 'users#update'
 
   get 'api/users/:id' => 'users#api_show'
-  patch 'api/users' => 'users#api_update'
+  put 'api/users/:id' => 'users#api_update'
   get 'api/users/:id/threads' => 'users#api_threads'
   
   get '/api/posts/url' => 'contributions#api_url'
