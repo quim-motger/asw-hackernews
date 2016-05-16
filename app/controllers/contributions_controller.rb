@@ -1,6 +1,6 @@
 class ContributionsController < ApplicationController
   include SessionsHelper, ApplicationHelper
-  before_action :set_contribution, only: [:show, :edit, :update, :destroy]
+  before_action :set_contribution, only: [:show, :edit, :update, :destroy, :api_get_reply]
 
 
   # GET /contributions
@@ -138,6 +138,14 @@ class ContributionsController < ApplicationController
     set_contribution
     return status 404 if @contribution.nil? || @contribution.contr_type != 'post'
     render json: @contribution
+  end
+
+  def api_get_reply
+    if @contribution.nil? || @contribution.contr_type != 'reply'
+      render :json => {:error => "not-found"}.to_json, :status => 404
+    else
+      render json: @contribution
+    end
   end
   
   ##end API calls

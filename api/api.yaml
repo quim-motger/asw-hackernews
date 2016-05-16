@@ -19,6 +19,31 @@ produces:
 host: hackersnews.herokuapp.com
 # Describe your paths here
 paths:
+  /api/replies/{id}:
+      get:
+        description:
+          Obtains replies by id
+        parameters:
+          -
+            name: id
+            in: path
+            description: ID del reply
+            required: true
+            type: integer
+            format: int64
+        responses:
+          200:
+            description: Existing reply
+            schema:
+              $ref: '#/definitions/Contribution'
+          404:
+            description: Not found
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+
   /api/votes:
       post:
         security:
@@ -37,6 +62,20 @@ paths:
             description: Succesfully created
             schema:
               $ref: '#/definitions/Vote'
+          400:
+            description: User already voted
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: array
+                  items:
+                    type: string
+          403:
+            description: Non authorized
+            schema:
+              type: string
+
 
   /api/posts/ask:
     get:
