@@ -9,20 +9,76 @@ info:
   title: HackerNews
   
 securityDefinitions:
-  apiKey:
+  Token:
     type: apiKey
     description: Té la clau de usuari generada. Es pot extreure desde la interficie grafica de la aplicació
-    name: api_key
+    name: Authorization
     in: header
 produces:
   - application/json
-host: hackernews-pereberge.c9users.io
+host: hackersnews.herokuapp.com
 # Describe your paths here
 paths:
+  /api/replies/{id}:
+      get:
+        description:
+          Obtains replies by id
+        parameters:
+          -
+            name: id
+            in: path
+            description: ID del reply
+            required: true
+            type: integer
+            format: int64
+        responses:
+          200:
+            description: Existing reply
+            schema:
+              $ref: '#/definitions/Contribution'
+          404:
+            description: Not found
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+
+  /api/votes:
+      post:
+        security:
+          - Token: []
+        description: |
+          Creates new vote.
+        parameters:
+          -
+            name: contribution_id
+            in: formData
+            description: Contribution identifier
+            required: true
+            type: number
+        responses:
+          200:
+            description: Succesfully created
+            schema:
+              $ref: '#/definitions/Vote'
+          400:
+            description: User already voted
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: array
+                  items:
+                    type: string
+          403:
+            description: Non authorized
+            schema:
+              type: string
+
+
   /api/posts/ask:
     get:
-      security:
-        - apiKey: []
       description: |
         Retorna una llista de posts de tipus "Ask" ordenades cronològicament per data de publicació
       responses:
@@ -38,8 +94,6 @@ paths:
             $ref: '#/definitions/Error'
   /api/posts/url:
     get:
-      security:
-        - apiKey: []
       description: |
         Retorna una llista de posts de tipus "Url" ordenades cronològicament per data de publicació
       responses:
@@ -55,8 +109,6 @@ paths:
             $ref: '#/definitions/Error'
   /api/posts/{id}:
     get:
-      security:
-        - apiKey: []
       description: |
         Retorna la informació d'un post
       parameters:
@@ -77,8 +129,6 @@ paths:
             $ref: '#/definitions/Error'
   /api/comments/{id}:
     get:
-      security:
-        - apiKey: []
       description: |
         Retorna la informació d'un comentari
       parameters:
@@ -97,7 +147,7 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
-            
+
   /api/users/{id}:
     get:
       security:
@@ -119,7 +169,7 @@ paths:
         default:
           description: Unexpected error
           schema:
-            $ref: '#/definitions/Error'    
+            $ref: '#/definitions/Error'
 
     put:
       security:
@@ -136,10 +186,10 @@ paths:
       responses:
         200:
           description: Succesfully update
-          schema: 
+          schema:
             $ref: '#/definitions/User'
-                
-  /api/users/{id}/threads:  
+
+  /api/users/{id}/threads:
     get:
       security:
         - apiKey: []
@@ -157,7 +207,7 @@ paths:
           description: Succesfully get
           schema:
              $ref: '#/definitions/Contribution'
-              
+
 definitions:
   Contribution:
     type: object
@@ -190,10 +240,27 @@ definitions:
           type: string
         fields:
           type: string
-  User:
-    type: object
-    properties:
-      username:
-        type: string
-      email:
-        type: string        
+  Vote:
+      type: object
+      properties:
+        contribution_id:
+          type: integer
+          format: int32
+        id:
+          type: integer
+          format: int32
+        user_id:
+          type: integer
+          format: int32
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      User:
+        type: object
+        properties:
+          username:
+            type: string
+          email:
+            type: string
+
