@@ -148,6 +148,51 @@ class ContributionsController < ApplicationController
     end
   end
   
+  def create_reply_api
+    @contribution = Contribution.new({content: params['reply']})
+    @contribution.user_id = @api_user.id
+    @contribution.contr_type= 'reply'
+    if @contribution.save
+      render :show_api_reply, id: @contribution.id
+    else
+      render json: @contribution.errors, status: :bad_request
+    end
+  end
+  
+  def create_posts_api
+    @contribution = Contribution.new({title: params['title']})
+    @contribution.user_id = @api_user.id
+    @contribution.contr_type= 'post'
+    @contribution.title = title
+    
+    if params['url'].blank? 
+      @contribution.contr_subtype ='text'
+      @contribution.content = params['text']
+    else
+      @contribution.contr_subtype = 'url'
+      @contribution.url = params['url']
+    end
+    if ((params['url'].blank? && params['text'].blank?) || ((not params['url'].blank?) && (not params['text'].blank?)))
+       render json: @contribution.errors, status: :bad_request
+    end
+    if @contribution.save
+      render :show_api_post, id: @contribution.id
+    else
+      render json: @contribution.errors, status: :bad_request
+    end
+  end
+  
+  def create_comment_api
+    @contribution = Contribution.new({content: params['comment']})
+    @contribution.user_id = @api_user.id
+    @contribution.contr_type= 'comment'
+    if @contribution.save
+      render :show_api_comment, id: @contribution.id
+    else
+      render json: @contribution.errors, status: :bad_request
+    end
+  end
+  
   ##end API calls
   
   private
