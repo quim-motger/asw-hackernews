@@ -42,7 +42,7 @@ paths:
               user_id:
                 type: integer
 
-  /api/users:
+  /api/users/{id}:
     get:
       security:
         - apiKey: []
