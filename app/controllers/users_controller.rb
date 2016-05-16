@@ -84,9 +84,8 @@ class UsersController < ApplicationController
   end
   
   def api_update
-    @user = @api_user
-    @user.update(user_params)
-    render json: @user
+    @api_user.update(:name)
+    render json: @api_user
   end
   
   def api_threads
