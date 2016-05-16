@@ -120,83 +120,67 @@ paths:
 
   /api/posts:
     post:
+      security:
+          - apiKey: []
       description: |
         Create a new post, question or link
       parameters:
-        - name: token
-          in: header
-          description: Autentificator token
-          required: true
-          type: String
-          format: ???
-        - name: title
+        - 
+          name: title
           in: body
           description: title of the submission
           required: true
-          type: text
-          format: ???
-        - name: url
+          type: string
+        - 
+          name: url
           in: body
           description: Url of the link (empty if question)
           required: false
-          type: url
-          format: ???
-        - name: text
+          type: string
+        - 
+          name: text
           in: body
           description: Text of the question (empty if link)
           required: false (ccant be false both)
           type: text
-          format: ???
-
+      
       responses:
         200:
-          description: Successfully created
+          description: Succesfully created
           schema:
-            $ref: '#/definitions/Succes'
-        403:
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error403'
-        default:
-          description: unexpected error
-          schema:
-            $ref: '#/definitions/Error'
-
-
-
-          /api/comments:
+            title: posts
+            type: object
+            properties:
+              contribution_id:
+                type: integer
+              user_id:
+                type: integer
+          
+          
+          
+  /api/comments:
     post:
+      security:
+          - apiKey: []
       description: |
         Create a new comment of a post
       parameters:
-        - name: token
-          in: header
-          description: Autentificator token
-          required: true
-          type: String
-          format: ???
         - name: comment
           in: body
           description: body of the comment
           required: true
           type: text
-          format: ???
-
+        -
+          name: contribution_id
+          in: formData
+          description: Contribution identifier
+          required: true
+          type: number
+        
       responses:
         200:
-          description: Successfully created
+          description: Succesfully created
           schema:
-            $ref: '#/definitions/Succes'
-        403:
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/Error403'
-        default:
-          description: unexpected error
-          schema:
-            $ref: '#/definitions/Error'
-
-
             title: comments
             type: object
             properties:
@@ -204,10 +188,10 @@ paths:
                 type: integer
               user_id:
                 type: integer
-
-
-
-
+                
+                
+          
+          
   /api/replies:
     post:
       security:
@@ -235,4 +219,4 @@ paths:
               contribution_id:
                 type: integer
               user_id:
-                type: integer
+                type: integer  
