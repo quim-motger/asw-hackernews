@@ -192,6 +192,13 @@ paths:
           description: Succesfully update
           schema:
             $ref: '#/definitions/User'
+        401:
+          description: Unathorized user
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
 
   /api/users/{id}/threads:
     get:

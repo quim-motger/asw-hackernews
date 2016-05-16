@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_unauthorized
-    render json: {:error => 'Unathorized'}.to_json, :status => 401
+    render json: {:error => 'Unauthorized'}.to_json, :status => 401
   end
 
 end
