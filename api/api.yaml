@@ -35,7 +35,7 @@ paths:
           200:
             description: La replica ja existeix
             schema:
-              $ref: '#/definitions/Contribution'
+              $ref: '#/definitions/Reply'
           404:
             description: Not found
             schema:
@@ -90,7 +90,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/definitions/Contribution'
+                $ref: '#/definitions/Post'
           default:
             description: Unexpected error
             schema:
@@ -105,7 +105,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/definitions/Contribution'
+                $ref: '#/definitions/Post'
           default:
             description: Unexpected error
             schema:
@@ -125,7 +125,7 @@ paths:
           200:
             description: Successful response
             schema:
-              $ref: '#/definitions/Contribution'
+              $ref: '#/definitions/Post'
           default:
             description: Unexpected error
             schema:
@@ -145,7 +145,7 @@ paths:
           200:
             description: Successful response
             schema:
-              $ref: '#/definitions/Contribution'
+              $ref: '#/definitions/Comment'
           default:
             description: Unexpected error
             schema:
@@ -181,7 +181,7 @@ paths:
           200:
             description: Succesfully created
             schema:
-              $ref: '#/definitions/Contribution'
+              $ref: '#/definitions/Post'
 
 
   /api/comments:
@@ -207,7 +207,7 @@ paths:
           200:
             description: Succesfully created
             schema:
-              $ref: '#/definitions/Contribution'
+              $ref: '#/definitions/Comment'
 
   /api/replies:
       post:
@@ -232,10 +232,54 @@ paths:
           200:
             description: Succesfully created
             schema:
-              $ref: '#/definitions/Contribution'
+              $ref: '#/definitions/Reply'
 
 definitions:
-  Contribution:
+  Post:
+    type: object
+    properties:
+      title:
+        type: string
+      contr_subtype:
+        type: string
+      content:
+        type: string
+      user_id:
+        type: integer
+      url:
+        type: string
+      parent_id:
+        type: integer
+      upvote:
+        type: integer
+      created_at:
+        type: string
+      updated_at:
+        type: string
+
+  Comment:
+    type: object
+    properties:
+      title:
+        type: string
+      contr_subtype:
+        type: string
+      content:
+        type: string
+      user_id:
+        type: integer
+      url:
+        type: string
+      parent_id:
+        type: integer
+      upvote:
+        type: integer
+      created_at:
+        type: string
+      updated_at:
+        type: string
+
+  Reply:
     type: object
     properties:
       title:
