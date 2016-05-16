@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   get '/threads' => 'contributions#threads'
   patch '/user' => 'users#update'
 
+  get 'api/users/:id' => 'users#api_show'
+  patch 'api/users/:id' => 'users#api_update'
+  end 
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -73,13 +76,5 @@ Rails.application.routes.draw do
   root 'contributions#newest'
   
 end
-
-ApiDemoApp::Application.routes.draw do
-  scope '/api' do
-    scope '/users' do
-      get '/user' => 'users#index'
-      patch '/user' => 'users#index'
-      
-    end
-  end  
+ 
 end
