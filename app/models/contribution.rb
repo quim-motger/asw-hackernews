@@ -21,6 +21,14 @@ class Contribution < ActiveRecord::Base
     h[:_links] = {
         user: '/api/users/'+self.user_id.to_s
     }
+
+    if not self.parent.nil? and self.contr_type == 'comment'
+      h[:_links][:parent] = '/api/posts/'+self.parent_id.to_s
+    end
+
+    if not self.parent.nil? and self.contr_type == 'reply'
+      h[:_links][:parent] = '/api/comments/'+self.parent_id.to_s
+    end
     return h
   end
 

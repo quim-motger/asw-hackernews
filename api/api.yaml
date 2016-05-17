@@ -394,6 +394,8 @@ definitions:
         properties:
           user:
             type: string
+          parent:
+            type: string
 
   Post:
     type: object
