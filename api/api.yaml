@@ -358,7 +358,7 @@ paths:
                   type: array
                   items:
                     type: string
-          403:
+          401:
             description: No autoritzat
             schema:
               type: object
