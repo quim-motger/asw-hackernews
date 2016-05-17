@@ -9,6 +9,11 @@ class Contribution < ActiveRecord::Base
   validates :title, presence: true, if: "contr_type=='post'"
   validates :content, presence: true, if: "contr_type=='post' and contr_subtype=='text'"
   validates :url, :format => URI::regexp(%w(http https)), if: "contr_type=='post' and contr_subtype=='url'"
+  validates :parent, presence: true
+  validates :user, presence: true
+
+  validate :url_xor_text
+
 
   after_initialize :init
 
@@ -18,6 +23,13 @@ class Contribution < ActiveRecord::Base
       self.contr_subtype='text'
     elsif self.content.blank?
       self.contr_subtype='url'
+    end
+  end
+
+  private
+  def url_xor_text
+    unless content.blank? ^ url.blank?
+      errors.add(:type, 'Especifica només un text o una url, no els dos')
     end
   end
 end

@@ -30,4 +30,8 @@ class ApplicationController < ActionController::Base
     render json: {:error => 'Unauthorized'}.to_json, :status => 401
   end
 
+  def render_not_found
+    render :json => {:error => "not-found"}.to_json, :status => 404
+  end
+
 end
