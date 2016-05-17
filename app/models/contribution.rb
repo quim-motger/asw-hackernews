@@ -35,7 +35,7 @@ class Contribution < ActiveRecord::Base
   end
 
   def comment_from_post
-    if contr_type=='comment' & parent.contr_type != 'post'
+    if contr_type=='comment' and parent.contr_type != 'post'
       errors.add(:parent_id, 'Un comentari s\'ha de fer sobre un post')
     end
   end
