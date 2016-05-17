@@ -9,10 +9,11 @@ class Contribution < ActiveRecord::Base
   validates :title, presence: true, if: "contr_type=='post'"
   validates :content, presence: true, if: "contr_type=='post' and contr_subtype=='text'"
   validates :url, :format => URI::regexp(%w(http https)), if: "contr_type=='post' and contr_subtype=='url'"
-  validates :parent, presence: true
+  validates :parent, presence: true, if: "contr_type!='post'"
   validates :user, presence: true
 
   validate :url_xor_text
+  validate :comment_from_post
 
 
   after_initialize :init
@@ -30,6 +31,12 @@ class Contribution < ActiveRecord::Base
   def url_xor_text
     unless content.blank? ^ url.blank?
       errors.add(:type, 'Especifica només un text o una url, no els dos')
+    end
+  end
+
+  def comment_from_post
+    if contr_type=='comment' & parent.contr_type != 'post'
+      errors.add(:parent_id, 'Un comentari s\'ha de fer sobre un post')
     end
   end
 end

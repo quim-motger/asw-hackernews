@@ -199,6 +199,10 @@ class ContributionsController < ApplicationController
     @contribution.user_id = @api_user.id
     @contribution.contr_type= 'comment'
     @contribution.parent_id = params[:parent_id]
+    if @contribution.parent.contr_type != 'post'
+      render json: {:error => 'Comentari en una contribució que no es de tipus post'}
+      return
+    end
     if @contribution.save
       render json: @contribution, status: :ok
     else
