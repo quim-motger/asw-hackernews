@@ -116,29 +116,30 @@ class ContributionsController < ApplicationController
       redirect_to signin_path("google");
     end
   end
-  
+
   ##API calls
-  
+
   def api_url
     @contributions = Contribution.where(["contr_type = 'post' and contr_subtype='url'"]).all.order('CREATED_AT DESC');
     render json: @contributions
   end
-  
+
   def api_ask
     @contributions = Contribution.where(["contr_type = 'post'  and contr_subtype = 'text'"]).all.order('CREATED_AT DESC');
     render json: @contributions
   end
-  
+
   def api_comment
     set_contribution
-
     if @contribution.nil? || @contribution.contr_type != 'comment'
       render :json => {:error => "not-found"}.to_json, :status => 404
     else
       render json: {:contribution => @contribution, :replies => @contribution.replies}.to_json, status: :ok
     end
+  rescue ActiveRecord::RecordNotFound
+    render_not_found
   end
-  
+
   def api_post
     set_contribution
     if @contribution.nil? || @contribution.contr_type != 'post'
@@ -146,6 +147,8 @@ class ContributionsController < ApplicationController
     else
       render json: {:contribution => @contribution, :comments => @contribution.replies}.to_json, status: :ok
     end
+  rescue ActiveRecord::RecordNotFound
+    render_not_found
   end
 
   def api_get_reply
@@ -154,8 +157,10 @@ class ContributionsController < ApplicationController
     else
       render json: @contribution
     end
+  rescue ActiveRecord::RecordNotFound
+    render_not_found
   end
-  
+
   def create_reply_api
     @contribution = Contribution.new({content: params['reply']})
     @contribution.user_id = @api_user.id
@@ -167,22 +172,20 @@ class ContributionsController < ApplicationController
       render json: @contribution.errors, status: :bad_request
     end
   end
-  
+
   def create_posts_api
     @contribution = Contribution.new({title: params['title']})
     @contribution.user_id = @api_user.id
     @contribution.contr_type= 'post'
     @contribution.title = params[:title]
-    
-    if params['url'].blank? 
+
+    unless params['text'].blank?
       @contribution.contr_subtype ='text'
       @contribution.content = params['text']
-    else
+    end
+    unless params['url'].blank?
       @contribution.contr_subtype = 'url'
       @contribution.url = params['url']
-    end
-    if (params['url'].blank? && params['text'].blank?) || ((not params['url'].blank?) && (not params['text'].blank?))
-       render json: @contribution.errors, status: :bad_request
     end
     if @contribution.save
       render json: @contribution, id: @contribution.id
@@ -190,7 +193,7 @@ class ContributionsController < ApplicationController
       render json: @contribution.errors, status: :bad_request
     end
   end
-  
+
   def create_comment_api
     @contribution = Contribution.new({content: params['comment']})
     @contribution.user_id = @api_user.id
@@ -202,9 +205,9 @@ class ContributionsController < ApplicationController
       render json: @contribution.errors, status: :bad_request
     end
   end
-  
+
   ##end API calls
-  
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_contribution
