@@ -295,6 +295,13 @@ paths:
             properties:
               error:
                 type: string
+        403:
+          description: No permés
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
 
   /api/users/{id}/threads:
     get:
