@@ -5,7 +5,7 @@ swagger: '2.0'
 
 # This is your document metadata
 info:
-  version: "0.0.1"
+  version: "1.0.0"
   title: HackerNews
   
 securityDefinitions:
@@ -20,7 +20,310 @@ host: hackersnews.heroku.com
 # Describe your paths here
 paths:
 
+  /api/posts/ask:
+      get:
+        description:
+          Retorna una llista de posts de tipus "Ask" ordenades cronològicament per data de publicació
+        responses:
+          200:
+            description: Successful response
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/Contribution'
 
+  /api/posts/url:
+      get:
+        description:
+          Retorna una llista de posts de tipus "Url" ordenades cronològicament per data de publicació
+        responses:
+          200:
+            description: Successful response
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/Contribution'
+
+  /api/posts/{id}:
+      get:
+        description:
+          Retorna la informació d'un post
+        parameters:
+          - name: id
+            in: path
+            description: ID del post (ask o url)
+            required: true
+            type: integer
+            format: int64
+        responses:
+          200:
+            description: Successful response
+            schema:
+              $ref: '#/definitions/Post'
+          404:
+            description: No existeix el post
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+
+  /api/posts:
+      post:
+        security:
+            - Token: []
+        description: |
+          Crea un nou post (pregunta o url)
+        parameters:
+          -
+            name: title
+            in: formData
+            description: title of the submission
+            required: true
+            type: string
+          -
+            name: url
+            in: formData
+            description: Url of the link (empty if question)
+            required: false
+            type: string
+          -
+            name: text
+            in: formData
+            description: Text of the question (empty if link)
+            required: false
+            type: string
+
+        responses:
+          200:
+            description: Succesfully created
+            schema:
+              $ref: '#/definitions/Contribution'
+          400:
+            description: Paràmetres incorrectes
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+          401:
+            description: No autoritzat
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+
+  /api/comments/{id}:
+      get:
+        description:
+          Retorna la informació d'un comentari
+        parameters:
+          - name: id
+            in: path
+            description: ID del comentari
+            required: true
+            type: integer
+        responses:
+          200:
+            description: Successful response
+            schema:
+              $ref: '#/definitions/Comment'
+          404:
+            description: No existeix el comentari
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+
+  /api/comments:
+      post:
+        security:
+            - Token: []
+        description: |
+          Crea un nou comentari per a un post
+        parameters:
+          - name: comment
+            in: formData
+            description: body of the comment
+            required: true
+            type: string
+          -
+            name: parent_id
+            in: formData
+            description: Identificador de la contribució sobre la que comentem
+            required: true
+            type: number
+
+        responses:
+          200:
+            description: Succesfully created
+            schema:
+              $ref: '#/definitions/Comment'
+          400:
+            description: No existeix la contribució referenciada
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+          401:
+            description: No autoritzat
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  
+  /api/replies/{id}:
+      get:
+        description:
+          Retorna la informació d'una replica.
+        parameters:
+          -
+            name: id
+            in: path
+            description: Identificador de la replica
+            required: true
+            type: integer
+            format: int64
+        responses:
+          200:
+            description: La replica ja existeix
+            schema:
+              $ref: '#/definitions/Contribution'
+          404:
+            description: No trobat
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+
+  /api/replies:
+      post:
+        security:
+            - Token: []
+        description:
+          Crea una nova rèplica per a un comentari
+        parameters:
+          -
+            name: parent_id
+            in: formData
+            description: Identificador del comentari sobre el que fem una rèplica
+            required: true
+            type: number
+
+          - name: reply
+            in: formData
+            description: Contigut de la replica
+            required: true
+            type: string
+        responses:
+          200:
+            description: Succesfully created
+            schema:
+              $ref: '#/definitions/Contribution'
+          400:
+            description: No existeix la contribució referenciada
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+          401:
+            description: No autoritzat
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+
+
+  /api/users/{id}:
+    get:
+      description: |
+        Retorna la informació d'un usuari
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identificador d'usuari
+          required: true
+          type: number
+      responses:
+        200:
+          description: Succesfully get
+          schema:
+             $ref: '#/definitions/User'
+        404:
+            description: No existeix l'usuari
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+
+    put:
+      security:
+        - Token: []
+      description:
+        Edita un usuari
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identificador d'usuari
+          required: true
+          type: number
+        -
+          name: name
+          in: formData
+          description: Nom d'usuari
+          required: false
+          type: string
+      responses:
+        200:
+          description: Succesfully update
+          schema:
+            $ref: '#/definitions/User'
+        401:
+          description: No autoritzat
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+
+  /api/users/{id}/threads:
+    get:
+      security:
+        - Token: []
+      description: |
+        Obté els comentaris i rèpliques d'un usuari
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identificador d'usuari
+          required: true
+          type: number
+      responses:
+        200:
+          description: Succesfully get
+          schema:
+            type: array
+            items:
+               $ref: '#/definitions/Contribution'
+        404:
+            description: No existeix l'usuari
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  
   /api/votes:
       post:
         security:
@@ -55,265 +358,6 @@ paths:
               properties:
                 error:
                   type: string
-
-
-  /api/posts/ask:
-      get:
-        description:
-          Retorna una llista de posts de tipus "Ask" ordenades cronològicament per data de publicació
-        responses:
-          200:
-            description: Successful response
-            schema:
-              type: array
-              items:
-                $ref: '#/definitions/Contribution'
-          default:
-            description: Unexpected error
-            schema:
-              $ref: '#/definitions/Error'
-
-  /api/posts/url:
-      get:
-        description:
-          Retorna una llista de posts de tipus "Url" ordenades cronològicament per data de publicació
-        responses:
-          200:
-            description: Successful response
-            schema:
-              type: array
-              items:
-                $ref: '#/definitions/Contribution'
-          default:
-            description: Unexpected error
-            schema:
-              $ref: '#/definitions/Error'
-
-  /api/posts/{id}:
-      get:
-        description:
-          Retorna la informació d'un post
-        parameters:
-          - name: id
-            in: path
-            description: ID del post (ask o url)
-            required: true
-            type: integer
-            format: int64
-        responses:
-          200:
-            description: Successful response
-            schema:
-              $ref: '#/definitions/Post'
-          default:
-            description: Unexpected error
-            schema:
-              $ref: '#/definitions/Error'
-
-  /api/posts:
-      post:
-        security:
-            - Token: []
-        description: |
-          Create a new post, question or link
-        parameters:
-          -
-            name: title
-            in: formData
-            description: title of the submission
-            required: true
-            type: string
-          -
-            name: url
-            in: formData
-            description: Url of the link (empty if question)
-            required: false
-            type: string
-          -
-            name: text
-            in: formData
-            description: Text of the question (empty if link)
-            required: false
-            type: string
-
-        responses:
-          200:
-            description: Succesfully created
-            schema:
-              $ref: '#/definitions/Contribution'
-
-  /api/comments/{id}:
-      get:
-        description:
-          Retorna la informació d'un comentari
-        parameters:
-          - name: id
-            in: path
-            description: ID del comentari
-            required: true
-            type: integer
-        responses:
-          200:
-            description: Successful response
-            schema:
-              $ref: '#/definitions/Comment'
-          default:
-            description: Unexpected error
-            schema:
-              $ref: '#/definitions/Error'
-
-
-
-  /api/comments:
-      post:
-        security:
-            - Token: []
-        description: |
-          Create a new comment of a post
-        parameters:
-          - name: comment
-            in: formData
-            description: body of the comment
-            required: true
-            type: string
-          -
-            name: parent_id
-            in: formData
-            description: Identificador de la contribució sobre la que comentem
-            required: true
-            type: number
-
-        responses:
-          200:
-            description: Succesfully created
-            schema:
-              $ref: '#/definitions/Comment'
-  /api/replies/{id}:
-      get:
-        description:
-          Retorna la informació d'una replica.
-        parameters:
-          -
-            name: id
-            in: path
-            description: Identificador de la replica
-            required: true
-            type: integer
-            format: int64
-        responses:
-          200:
-            description: La replica ja existeix
-            schema:
-              $ref: '#/definitions/Contribution'
-          404:
-            description: No trobat
-            schema:
-              type: object
-              properties:
-                error:
-                  type: string
-
-  /api/replies:
-      post:
-        security:
-            - Token: []
-        description:
-          Create a new reply of a comment
-        parameters:
-          -
-            name: parent_id
-            in: formData
-            description: Identificador del comentari sobre el que fem una replica
-            required: true
-            type: number
-
-          - name: reply
-            in: formData
-            description: Contigut de la replica
-            required: true
-            type: string
-        responses:
-          200:
-            description: Succesfully created
-            schema:
-              $ref: '#/definitions/Contribution'
-
-
-  /api/users/{id}:
-    get:
-      description: |
-        Gets specific user.
-      parameters:
-        -
-          name: id
-          in: path
-          description: User identifier
-          required: true
-          type: number
-      responses:
-        200:
-          description: Succesfully get
-          schema:
-             $ref: '#/definitions/User'
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
-
-    put:
-      security:
-        - Token: []
-      description:
-        Edit user
-      parameters:
-        -
-          name: id
-          in: path
-          description: User identifier
-          required: true
-          type: number
-        -
-          name: name
-          in: formData
-          description: User name
-          required: false
-          type: string
-      responses:
-        200:
-          description: Succesfully update
-          schema:
-            $ref: '#/definitions/User'
-        401:
-          description: Unathorized user
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-
-  /api/users/{id}/threads:
-    get:
-      security:
-        - Token: []
-      description: |
-        Gets specific user.
-      parameters:
-        -
-          name: id
-          in: path
-          description: User identifier
-          required: true
-          type: number
-      responses:
-        200:
-          description: Succesfully get
-          schema:
-            type: array
-            items:
-               $ref: '#/definitions/Contribution'
-
-
-
 
 definitions:
 
@@ -360,16 +404,6 @@ definitions:
         items:
           $ref: '#/definitions/Contribution'
 
-  Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        fields:
-          type: string
   Vote:
       type: object
       properties:
