@@ -5,7 +5,7 @@ swagger: '2.0'
 
 # This is your document metadata
 info:
-  version: "0.0.1"
+  version: "1.0.0"
   title: HackerNews
   
 securityDefinitions:
@@ -16,46 +16,9 @@ securityDefinitions:
     in: header
 produces:
   - application/json
-host: hackersnews.heroku.com
+host: hackersnews.herokuapp.com
 # Describe your paths here
 paths:
-
-
-  /api/votes:
-      post:
-        security:
-          - Token: []
-        description: |
-          Crea un nou vot
-        parameters:
-          -
-            name: contribution_id
-            in: formData
-            description: identificador de la contribució a votar
-            required: true
-            type: number
-        responses:
-          200:
-            description: Succesfully created
-            schema:
-              $ref: '#/definitions/Vote'
-          400:
-            description: L'usuari ja ha votat
-            schema:
-              type: object
-              properties:
-                user_id:
-                  type: array
-                  items:
-                    type: string
-          403:
-            description: No autoritzat
-            schema:
-              type: object
-              properties:
-                error:
-                  type: string
-
 
   /api/posts/ask:
       get:
@@ -68,10 +31,6 @@ paths:
               type: array
               items:
                 $ref: '#/definitions/Contribution'
-          default:
-            description: Unexpected error
-            schema:
-              $ref: '#/definitions/Error'
 
   /api/posts/url:
       get:
@@ -84,10 +43,6 @@ paths:
               type: array
               items:
                 $ref: '#/definitions/Contribution'
-          default:
-            description: Unexpected error
-            schema:
-              $ref: '#/definitions/Error'
 
   /api/posts/{id}:
       get:
@@ -105,17 +60,20 @@ paths:
             description: Successful response
             schema:
               $ref: '#/definitions/Post'
-          default:
-            description: Unexpected error
+          404:
+            description: No existeix el post
             schema:
-              $ref: '#/definitions/Error'
+              type: object
+              properties:
+                error:
+                  type: string
 
   /api/posts:
       post:
         security:
             - Token: []
         description: |
-          Create a new post, question or link
+          Crea un nou post (pregunta o url)
         parameters:
           -
             name: title
@@ -141,6 +99,20 @@ paths:
             description: Succesfully created
             schema:
               $ref: '#/definitions/Contribution'
+          400:
+            description: Paràmetres incorrectes
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+          401:
+            description: No autoritzat
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
 
   /api/comments/{id}:
       get:
@@ -157,19 +129,20 @@ paths:
             description: Successful response
             schema:
               $ref: '#/definitions/Comment'
-          default:
-            description: Unexpected error
+          404:
+            description: No existeix el comentari
             schema:
-              $ref: '#/definitions/Error'
-
-
+              type: object
+              properties:
+                error:
+                  type: string
 
   /api/comments:
       post:
         security:
             - Token: []
         description: |
-          Create a new comment of a post
+          Crea un nou comentari per a un post
         parameters:
           - name: comment
             in: formData
@@ -188,6 +161,21 @@ paths:
             description: Succesfully created
             schema:
               $ref: '#/definitions/Comment'
+          400:
+            description: No existeix la contribució referenciada
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+          401:
+            description: No autoritzat
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  
   /api/replies/{id}:
       get:
         description:
@@ -218,12 +206,12 @@ paths:
         security:
             - Token: []
         description:
-          Create a new reply of a comment
+          Crea una nova rèplica per a un comentari
         parameters:
           -
             name: parent_id
             in: formData
-            description: Identificador del comentari sobre el que fem una replica
+            description: Identificador del comentari sobre el que fem una rèplica
             required: true
             type: number
 
@@ -237,17 +225,31 @@ paths:
             description: Succesfully created
             schema:
               $ref: '#/definitions/Contribution'
+          400:
+            description: No existeix la contribució referenciada
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+          401:
+            description: No autoritzat
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
 
 
   /api/users/{id}:
     get:
       description: |
-        Gets specific user.
+        Retorna la informació d'un usuari
       parameters:
         -
           name: id
           in: path
-          description: User identifier
+          description: Identificador d'usuari
           required: true
           type: number
       responses:
@@ -255,27 +257,30 @@ paths:
           description: Succesfully get
           schema:
              $ref: '#/definitions/User'
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
+        404:
+            description: No existeix l'usuari
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
 
     put:
       security:
         - Token: []
       description:
-        Edit user
+        Edita un usuari
       parameters:
         -
           name: id
           in: path
-          description: User identifier
+          description: Identificador d'usuari
           required: true
           type: number
         -
           name: name
           in: formData
-          description: User name
+          description: Nom d'usuari
           required: false
           type: string
       responses:
@@ -284,7 +289,14 @@ paths:
           schema:
             $ref: '#/definitions/User'
         401:
-          description: Unathorized user
+          description: No autoritzat
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+        403:
+          description: No permés
           schema:
             type: object
             properties:
@@ -296,12 +308,12 @@ paths:
       security:
         - Token: []
       description: |
-        Gets specific user.
+        Obté els comentaris i rèpliques d'un usuari
       parameters:
         -
           name: id
           in: path
-          description: User identifier
+          description: Identificador d'usuari
           required: true
           type: number
       responses:
@@ -311,9 +323,48 @@ paths:
             type: array
             items:
                $ref: '#/definitions/Contribution'
-
-
-
+        404:
+            description: No existeix l'usuari
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  
+  /api/votes:
+      post:
+        security:
+          - Token: []
+        description: |
+          Crea un nou vot
+        parameters:
+          -
+            name: contribution_id
+            in: formData
+            description: identificador de la contribució a votar
+            required: true
+            type: number
+        responses:
+          200:
+            description: Succesfully created
+            schema:
+              $ref: '#/definitions/Vote'
+          400:
+            description: L'usuari ja ha votat
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: array
+                  items:
+                    type: string
+          401:
+            description: No autoritzat
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
 
 definitions:
 
@@ -360,16 +411,6 @@ definitions:
         items:
           $ref: '#/definitions/Contribution'
 
-  Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        fields:
-          type: string
   Vote:
       type: object
       properties:
