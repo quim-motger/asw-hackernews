@@ -16,7 +16,7 @@ securityDefinitions:
     in: header
 produces:
   - application/json
-host: hackersnews.heroku.com
+host: hackersnews.herokuapp.com
 # Describe your paths here
 paths:
 
