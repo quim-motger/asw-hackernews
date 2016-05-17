@@ -389,6 +389,11 @@ definitions:
         type: string
       updated_at:
         type: string
+      _links:
+        type: object
+        properties:
+          user:
+            type: string
 
   Post:
     type: object

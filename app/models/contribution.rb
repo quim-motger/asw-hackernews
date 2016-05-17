@@ -15,6 +15,14 @@ class Contribution < ActiveRecord::Base
   validate :url_xor_text
   validate :comment_from_post
 
+  def as_json(options = {})
+    h = super(options)
+
+    h[:_links] = {
+        user: '/api/users/'+self.user_id.to_s
+    }
+    return h
+  end
 
   after_initialize :init
 
