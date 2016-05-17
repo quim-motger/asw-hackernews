@@ -11,7 +11,11 @@ gem 'composite_primary_keys', '~> 8.1', '>= 8.1.3'
 gem 'turbolinks', '2.3.0'
 gem 'jbuilder', '2.2.3'
 gem 'sdoc', '0.4.0', group: :doc
+<<<<<<< HEAD
 gem 'rack-cors'
+=======
+gem 'rack-cors', :require => 'rack/cors'
+>>>>>>> 4240e0196f130730b39b2e40c3bfb95a133a87ec
 
 group :development, :test do
   gem 'sqlite3', '1.3.9'
