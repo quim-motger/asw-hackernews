@@ -303,6 +303,26 @@ paths:
               error:
                 type: string
 
+  /api/me:
+      get:
+        security:
+          - Token: []
+        description: |
+          Retorna la info del usuari loggejat
+        parameters:
+          -
+            name: id
+            in: path
+            description: Identificador d'usuari
+            required: true
+            type: number
+        responses:
+          200:
+            description: Succesfully get
+            schema:
+               $ref: '#/definitions/User'
+
+
   /api/users/{id}/threads:
     get:
       security:

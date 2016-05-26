@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :check_login, only: [:edit, :update]
   before_action :set_karma, only: [:show, :edit]
-  before_action :authenticate, only: [:api_update]
+  before_action :authenticate, only: [:api_update, :api_me]
   include ApplicationHelper
   include SessionsHelper
 
@@ -98,6 +98,11 @@ class UsersController < ApplicationController
     render json: @contributions
   end
 
+
+  def api_me
+    print 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+    render json: @api_user
+  end
   ##end API CALLS
 
   private

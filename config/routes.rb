@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get '/discuss' => 'contributions#discuss'
   get '/newest' => 'contributions#newest'
   get '/auth/:provider/callback', to: 'sessions#create'
+  get '/angular', to: 'sessions#angular_auth'
   post '/vote' => 'votes#create'
   get '/logout' => 'sessions#destroy'
   get '/submit' => 'contributions#new'
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
   patch '/user' => 'users#update'
 
   get 'api/users/:id' => 'users#api_show'
+  get 'api/me' => 'users#api_me'
   put 'api/users/:id' => 'users#api_update'
   get 'api/users/:id/threads' => 'users#api_threads'
   
