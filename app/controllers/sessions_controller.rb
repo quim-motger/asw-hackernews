@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   include ApplicationHelper
+
   def create
     @user = User.find_or_create_from_auth_hash(auth_hash)
     log_in(@user)
@@ -8,13 +9,18 @@ class SessionsController < ApplicationController
     if url_redirect
       uri = URI.parse(url_redirect)
       query = uri.query
+      port = uri.port
+      host = uri.host
+      unless port == 80
+        host=host+':'+port
+      end
       token = 'token='+encode(@user.email)
       if query
         query = '?'+query + '&'+token
       else
         query = '?'+token
       end
-      redirect_to 'http://'+uri.host + query
+      redirect_to 'http://'+host + query
       return
     end
     redirect_to root_url
