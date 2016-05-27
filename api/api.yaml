@@ -309,13 +309,6 @@ paths:
           - Token: []
         description: |
           Retorna la info del usuari loggejat
-        parameters:
-          -
-            name: id
-            in: path
-            description: Identificador d'usuari
-            required: true
-            type: number
         responses:
           200:
             description: Succesfully get
