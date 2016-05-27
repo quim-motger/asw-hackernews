@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       port = uri.port
       host = uri.host
       unless port == 80
-        host=host+':'+port
+        host=host+':'+port.to_s
       end
       token = 'token='+encode(@user.email)
       if query
