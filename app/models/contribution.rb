@@ -21,6 +21,8 @@ class Contribution < ActiveRecord::Base
     h[:_links] = {
         user: '/api/users/'+self.user_id.to_s
     }
+    
+    h[:upvote] = self.votes.length
 
     if not self.parent.nil? and self.contr_type == 'comment'
       h[:_links][:parent] = '/api/posts/'+self.parent_id.to_s
