@@ -5,6 +5,7 @@ class SessionsController < ApplicationController
     @user = User.find_or_create_from_auth_hash(auth_hash)
     log_in(@user)
     url_redirect = session[:redirect_url]
+    session[:redirect_url] = nil
     # print URI.decode_www_form(URI.parse(url_redirect).query) +'AAAAAAAAAAA'
     if url_redirect
       uri = URI.parse(url_redirect)
